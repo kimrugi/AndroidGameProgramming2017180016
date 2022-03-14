@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,12 +19,19 @@ public class MainActivity extends AppCompatActivity {
         tv.setText("i am a good programmer");
 
         Button btn = findViewById(R.id.btnPushMe);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tv.setText("Clicked \\(OoO)/");
-            }
-        });
+        btn.setOnClickListener(this);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                tv.setText("Clicked \\(OoO)/");
+//            }
+//        });
     }
 
+
+    @Override
+    public void onClick(View view) {
+        TextView tv = findViewById(R.id.subText);
+        tv.setText("Clicked \\(OoO)/");
+    }
 }
