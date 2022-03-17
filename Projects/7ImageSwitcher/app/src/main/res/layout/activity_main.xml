@@ -15,8 +15,10 @@
             android:background="@drawable/sel_prev"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:onClick="prevBtn"
             />
         <TextView
+            android:id="@+id/pageNumber"
             android:textSize="30sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -29,10 +31,12 @@
             android:background="@drawable/sel_next"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:onClick="nextBtn"
             />
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/catImage"
         android:src="@mipmap/cat1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
