@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,11 +21,16 @@ public class MainActivity extends AppCompatActivity {
             R.mipmap.cat4,
             R.mipmap.cat5
     };
+    private View prevBtn;
+    private View nextBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        prevBtn = findViewById(R.id.prevBtn);
+        nextBtn = findViewById(R.id.nextBtn);
 
         catImage = findViewById(R.id.catImage);
         pageNumberText = findViewById(R.id.pageNumber);
@@ -32,15 +38,27 @@ public class MainActivity extends AppCompatActivity {
         setPage(pageNumber);
     }
 
-    public void prevBtn(View view) {
+    public void onPrevBtn(View view) {
         setPage(pageNumber-1);
+
     }
 
-    public void nextBtn(View view) {
+    public void onNextBtn(View view) {
         setPage(pageNumber+1);
+
     }
 
     private void setPage(int pageNum){
+        if(pageNum <= 1){
+            prevBtn.setEnabled(false);
+        }else{
+            prevBtn.setEnabled(true);
+        }
+        if(pageNum >= 5){
+            nextBtn.setEnabled(false);
+        }else{
+            nextBtn.setEnabled(true);
+        }
         if(pageNum < 1 || pageNum > 5) return;
         pageNumber = pageNum;
         pageNumberText.setText(pageNumber+"/5");

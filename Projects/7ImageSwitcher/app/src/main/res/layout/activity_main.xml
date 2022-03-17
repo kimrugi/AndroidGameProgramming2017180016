@@ -12,10 +12,11 @@
         android:layout_height="wrap_content"
         >
         <ImageButton
+            android:id="@+id/prevBtn"
             android:background="@drawable/sel_prev"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:onClick="prevBtn"
+            android:onClick="onPrevBtn"
             />
         <TextView
             android:id="@+id/pageNumber"
@@ -28,10 +29,11 @@
             android:text="1/5"
             />
         <ImageButton
+            android:id="@+id/nextBtn"
             android:background="@drawable/sel_next"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:onClick="nextBtn"
+            android:onClick="onNextBtn"
             />
     </LinearLayout>
 
