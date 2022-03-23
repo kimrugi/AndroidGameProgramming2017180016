@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Layout Test</string>
+    <string name="checkbox">check box</string>
+    <string name="BtnDoIt">Do It</string>
 </resources>
