@@ -12,19 +12,43 @@
         android:layout_height="wrap_content"
         android:text="Hello World"
         android:textSize="30sp"
+        android:background="#ffa"
+        android:padding="20dp"
+        android:layout_margin="10dp"
+
         />
     <EditText
         android:id="@+id/nameEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-    <CheckBox
-        android:id="@+id/checkbox"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/checkbox"
-        android:onClick="onCheckBox"
-        tools:ignore="OnClick,UsingOnClickInXml" />
+        >
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkbox"
+            android:onClick="onCheckBox"
+            tools:ignore="OnClick,UsingOnClickInXml" />
+        <kr.ac.tukorea.g2017180016.layouttest.GameView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:padding="10dp"/>
+    </LinearLayout>
+    <kr.ac.tukorea.g2017180016.layouttest.GameView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingRight="100dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="100dp"
+
+        android:background="#ccf"
+        />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
