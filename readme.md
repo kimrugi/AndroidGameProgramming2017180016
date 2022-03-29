@@ -32,45 +32,45 @@ Rythm Defender
 	 * 화살표는 생성 시간과 점에 도달하는 시간, 점에 대한 상대적 위치를 생성 시간 순서대로 기록한다.
 	* 채보 json 예:
 		 ```json
-		{  
-			"musicName": "Jump Up Super Star",
-			"points": [
-				{  
-					"startTime": 10,
-					"endTime": 20,
-					"x": 300,
-					"y": 250,
-					"arrow":[
-							{
-								"startTime" : 10,  
-								"endTime" : 13,  
-								"x" : 10,  
-								"y" : -5  
-							},  
-							{  
-					          "startTime" : 16,
-					          "endTime" : 20,
-					          "x" : -5,
-					          "y" : 10
-					     }
-					 ]  
-			    },  
-			  {  
-					"startTime": 50,
-					"endTime": 70,
-					"x": 100,
-					"y": 50,
-					"arrow":[
-							{
-								"startTime" : 50,  
-								"endTime" : 60,  
-								"x" : 7,  
-								"y" : -7  
-							}
-					]  
-				}  
-			]  
-	    }  
+		{
+	   "musicName": "Jump Up Super Star",
+	   "points": [
+	      {
+		 "startTime": 10,
+		 "endTime": 20,
+		 "x": 300,
+		 "y": 250,
+		 "arrow": [
+		    {
+		       "startTime": 10,
+		       "endTime": 13,
+		       "x": 10,
+		       "y": -5
+		    },
+		    {
+		       "startTime": 16,
+		       "endTime": 20,
+		       "x": -5,
+		       "y": 10
+		    }
+		 ]
+	      },
+	      {
+		 "startTime": 50,
+		 "endTime": 70,
+		 "x": 100,
+		 "y": 50,
+		 "arrow": [
+		    {
+		       "startTime": 50,
+		       "endTime": 60,
+		       "x": 7,
+		       "y": -7
+		    }
+		 ]
+	      }
+	   ]
+	}
 		```
 * 음악 선택 뷰: 플레이할 레벨을 선택하는 뷰
 	* 구성요소
