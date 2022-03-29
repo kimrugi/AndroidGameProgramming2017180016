@@ -92,8 +92,11 @@ Rythm Defender
 ![선택](Images/levelSelector.png)
 * 음악이 재생되며 채보에 맞게 점, 화살표가 생성된다.
 ![게임1](Images/gameview.png)
+* 시간에 따라 화살표가 점 방향으로 이동한다.
 * 플레이어의 터치를 받아 점의 위치에서 터치해 드래그한 방향을 구해 점에서 그 방향으로 방어막을 생성한다.
 ![게임2](Images/gameview_with_barrier.png)
+* 화살표는 방어막이나 점에 부딪히면 사라진다.
+![게임3](Images/gameview_arrow.png)
 * 터치가 끝나거나 점이 사라지면 방어막은 사라진다.
 * 음악이 끝나면 게임이 종료된다.
 
