@@ -20,12 +20,12 @@ import java.util.Random;
 
 public class GameView  extends View implements Choreographer.FrameCallback {
 
-    private static final int BALL_COUNT = 5;
-    private final String TAG = GameView.class.getSimpleName();
 
-//    private ArrayList<Ball> balls = new ArrayList<Ball>();
-    private ArrayList<GameObject> objects = new ArrayList<GameObject>();
-    private Fighter fighter;
+    private final String TAG = GameView.class.getSimpleName();
+//    private static final int BALL_COUNT = 5;
+
+//    private ArrayList<GameObject> objects = new ArrayList<GameObject>();
+//    private Fighter fighter;
 
     private Paint fpsPaint = new Paint();
 
@@ -33,29 +33,35 @@ public class GameView  extends View implements Choreographer.FrameCallback {
     private int framesPerSecond;
 
     public static GameView view;
+    private boolean initialized;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        initView();
+//        initView();
+    }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        Metrics.width = w;
+        Metrics.height = h;
+
+        if(!initialized) {
+            initView();
+            initialized = true;
+        }
     }
 
     private void initView() {
         view = this;
-        Random random = new Random();
 
-        for(int i = 0; i < BALL_COUNT; ++i){
-            int dx = random.nextInt(10) + 5;
-            int dy = random.nextInt(10) + 5;
-            objects.add(new Ball(dx, dy));
-        }
+        MainGame game = MainGame.getInstance();
+        game.init();
 
         fpsPaint.setColor(Color.BLUE);
         fpsPaint.setTextSize(100);
-
-        fighter = new Fighter();
-        objects.add(fighter);
 
         Choreographer.getInstance().postFrameCallback(this);
     }
@@ -70,46 +76,22 @@ public class GameView  extends View implements Choreographer.FrameCallback {
             Log.v(TAG, "Elapsed: " + elapsed + " fps: " + framesPerSecond);
             previousTimeNanos = now;
 
-            update();
+            MainGame.getInstance().update(elapsed);
             invalidate();
         }
         //recall doFrame
         Choreographer.getInstance().postFrameCallback(this);
     }
 
-
-    private void update() {
-        for(GameObject object : objects){
-            object.update();
-        }
-        //fighter.update();
-    }
-
     @Override
     public void onDraw(Canvas canvas){
-        drawSoccer(canvas);
-        canvas.drawText("FPS: " + framesPerSecond, framesPerSecond * 10, 100, fpsPaint);
-        //Log.d(tag, "onDraw");
-        //fighter.draw(canvas);
-    }
+        MainGame.getInstance().draw(canvas);
 
-    private void drawSoccer(Canvas canvas) {
-        for(GameObject object : objects){
-            object.draw(canvas);
-        }
+        canvas.drawText("FPS: " + framesPerSecond, framesPerSecond * 10, 100, fpsPaint);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-                int x = (int) event.getX();
-                int y = (int) event.getY();
-                fighter.setPosition(x, y);
-                return true;
-        }
-        return super.onTouchEvent(event);
+        return MainGame.getInstance().onTouchEvent(event);
     }
 }
