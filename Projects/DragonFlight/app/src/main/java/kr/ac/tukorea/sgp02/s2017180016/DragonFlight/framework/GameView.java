@@ -1,15 +1,18 @@
-package kr.ac.tukorea.sgp02.s2017180016.DragonFlight;
+package kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Choreographer;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+
+import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.game.MainGame;
 
 public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
@@ -20,6 +23,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     public static GameView view;
     private boolean initialized;
+    private boolean running;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -36,6 +40,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         if (!initialized) {
             initView();
             initialized = true;
+            running = true;
         }
     }
 
@@ -53,6 +58,11 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     @Override
     public void doFrame(long currentTimeNanos) {
+        if(!running) {
+            Log.d(TAG, "Running is false on doFrame()");
+            return;
+        }
+
         long now = currentTimeNanos;
         int elapsed = (int) (now - previousTimeNanos);
         if (elapsed != 0) {
@@ -62,6 +72,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             MainGame.getInstance().update(elapsed);
             invalidate();
         }
+
         Choreographer.getInstance().postFrameCallback(this);
     }
 
@@ -71,10 +82,22 @@ public class GameView extends View implements Choreographer.FrameCallback {
         MainGame.getInstance().draw(canvas);
         canvas.drawText("FPS: " + framesPerSecond, framesPerSecond * 10, 100, fpsPaint);
 //        Log.d(TAG, "onDraw()");
+        canvas.drawText(""+MainGame.getInstance().objectCount(), 10, 100, fpsPaint);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return MainGame.getInstance().onTouchEvent(event);
+    }
+
+    public void pauseGame() {
+        running = false;
+    }
+
+    public void resumeGame() {
+        if(initialized && !running) {
+            running = true;
+            Choreographer.getInstance().postFrameCallback(this);
+        }
     }
 }

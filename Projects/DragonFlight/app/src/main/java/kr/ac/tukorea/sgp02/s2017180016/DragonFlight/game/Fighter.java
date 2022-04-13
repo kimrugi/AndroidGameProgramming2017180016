@@ -1,8 +1,13 @@
-package kr.ac.tukorea.sgp02.s2017180016.DragonFlight;
+package kr.ac.tukorea.sgp02.s2017180016.DragonFlight.game;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+
+import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.Metrics;
+import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.R;
+import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.Sprite;
+import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.BitmapPool;
 
 public class Fighter extends Sprite {
 

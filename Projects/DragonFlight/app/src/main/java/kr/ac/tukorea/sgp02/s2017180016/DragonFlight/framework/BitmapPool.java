@@ -1,4 +1,4 @@
-package kr.ac.tukorea.sgp02.s2017180016.DragonFlight;
+package kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
