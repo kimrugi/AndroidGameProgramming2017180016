@@ -4,13 +4,19 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.BoxCollidable;
 import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.GameObject;
 import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.Metrics;
 import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.R;
+import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.Recyclable;
+import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.RecycleBin;
 
-public class Bullet implements GameObject, BoxCollidable {
+public class Bullet implements GameObject, BoxCollidable, Recyclable {
+    private static final String TAG = Bullet.class.getSimpleName();
     protected float x, y;
     protected final float length;
     protected final float dy;
@@ -18,10 +24,22 @@ public class Bullet implements GameObject, BoxCollidable {
     protected static float laserWidth;
 
     protected RectF boundingBox = new RectF();
+    public static Bullet get(float x, float y) {
+        Bullet bullet = (Bullet) RecycleBin.get(Bullet.class);
+        if(bullet != null){
+            bullet.set(x,y);
+            return bullet;
+        }
+        return new Bullet(x, y);
+    }
 
-    public Bullet(float x, float y) {
+    private void set(float x, float y) {
         this.x = x;
         this.y = y;
+    }
+
+    private Bullet(float x, float y) {
+        set(x,y);
         this.length = Metrics.size(R.dimen.laser_length);
         this.dy = -Metrics.size(R.dimen.laser_speed);
 
@@ -31,6 +49,7 @@ public class Bullet implements GameObject, BoxCollidable {
             laserWidth = Metrics.size(R.dimen.laser_width);
             paint.setStrokeWidth(laserWidth);
         }
+        Log.d(TAG, "bullet created");
     }
 
     @Override
@@ -53,5 +72,10 @@ public class Bullet implements GameObject, BoxCollidable {
     @Override
     public RectF getBoundingRect() {
         return boundingBox;
+    }
+
+    @Override
+    public void finish() {
+
     }
 }
