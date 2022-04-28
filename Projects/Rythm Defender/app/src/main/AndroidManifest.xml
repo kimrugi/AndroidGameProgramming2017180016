@@ -10,10 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RythmDefender">
         <activity
+            android:name=".app.GameActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity
             android:name=".app.MainActivity"
             android:exported="true"
-            android:screenOrientation="landscape"
-            >
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
