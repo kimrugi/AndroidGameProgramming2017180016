@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.CollisionHelper;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameObject;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Recyclable;
@@ -17,7 +18,8 @@ public class MainGame {
     private static final String TAG = MainGame.class.getSimpleName();
     private final Paint collisionPaint = new Paint();
 //    Score score;
-    public int screenSizeX, screenSizeY;
+
+    private CollisionChecker collisionChecker;
 
     public static MainGame getInstance() {
         if (singleton == null) {
@@ -50,8 +52,12 @@ public class MainGame {
         collisionPaint.setColor(Color.RED);
         collisionPaint.setStyle(Paint.Style.STROKE);
         collisionPaint.setStrokeWidth(10);
+        collisionChecker = new CollisionChecker();
+        add(Layer.controller, collisionChecker);
+
         Circle circle = new Circle(100, 100);
         add(Layer.circle, circle);
+
     }
 
     private void initLayers(int count) {
@@ -90,11 +96,15 @@ public class MainGame {
 
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
+        int x = (int) event.getX();
+        int y = (int) event.getY();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                GameObject object = collisionChecker.checkTouchCollision(x, y);
+                remove(object);
+
+                return true;
             case MotionEvent.ACTION_MOVE:
-                int x = (int) event.getX();
-                int y = (int) event.getY();
                 return true;
         }
         return false;
