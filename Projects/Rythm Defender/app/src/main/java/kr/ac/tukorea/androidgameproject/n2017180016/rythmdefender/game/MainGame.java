@@ -58,6 +58,9 @@ public class MainGame {
         Circle circle = new Circle(100, 100);
         add(Layer.circle, circle);
 
+        Arrow arrow = new Arrow(200, 200);
+        add(Layer.arrow, arrow);
+
     }
 
     private void initLayers(int count) {
