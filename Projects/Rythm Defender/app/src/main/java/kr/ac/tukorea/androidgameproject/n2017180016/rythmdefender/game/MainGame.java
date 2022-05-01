@@ -17,6 +17,7 @@ public class MainGame {
     private static final String TAG = MainGame.class.getSimpleName();
     private final Paint collisionPaint = new Paint();
 //    Score score;
+    public int screenSizeX, screenSizeY;
 
     public static MainGame getInstance() {
         if (singleton == null) {
@@ -32,7 +33,6 @@ public class MainGame {
 
     private static MainGame singleton;
 
-    //private ArrayList<GameObject> objects = new ArrayList<>();
     private ArrayList<ArrayList<GameObject>> layers;
     public enum Layer{
         background, circle, arrow, barrier, ui, controller, COUNT
@@ -50,6 +50,8 @@ public class MainGame {
         collisionPaint.setColor(Color.RED);
         collisionPaint.setStyle(Paint.Style.STROKE);
         collisionPaint.setStrokeWidth(10);
+        Circle circle = new Circle(100, 100);
+        add(Layer.circle, circle);
     }
 
     private void initLayers(int count) {
