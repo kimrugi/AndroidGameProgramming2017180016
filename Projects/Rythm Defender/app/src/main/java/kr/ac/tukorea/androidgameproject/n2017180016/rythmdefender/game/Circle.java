@@ -13,6 +13,7 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Spri
 public class Circle extends Sprite implements GameObject, BoxCollidable {
     static private final float radius = Metrics.height / 6;
     private Barrier barrier;
+    private float angle;
 
     public Circle(float x, float y) {
         super(x, y, radius, radius, R.mipmap.hitcircle);
@@ -20,7 +21,9 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
 
     @Override
     public void update() {
-
+        angle += 1;
+        if(barrier == null) return;
+        barrier.setAngle(angle);
     }
 
     @Override
