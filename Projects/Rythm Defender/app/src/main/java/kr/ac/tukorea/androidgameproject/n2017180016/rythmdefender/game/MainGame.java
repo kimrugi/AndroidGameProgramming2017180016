@@ -105,6 +105,7 @@ public class MainGame {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 GameObject object = collisionChecker.checkTouchCollision(x, y);
+                if(object == null) return true;
                 ((Circle)object).onTouchDown();
                 return true;
             case MotionEvent.ACTION_MOVE:
