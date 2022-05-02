@@ -111,7 +111,7 @@ public class MainGame {
             case MotionEvent.ACTION_DOWN: {
                 object = collisionChecker.checkTouchCollision(x, y);
                 if (object == null) return true;
-                ((Circle) object).onTouchDown();
+                ((Circle) object).onTouchDown(x, y);
                 int key = event.getPointerId(0);
                 touchedCircles.put(key, (Circle) object);
                 return true;
@@ -120,12 +120,19 @@ public class MainGame {
                 for(int i = 0; i < pointerCount; ++i) {
                     object = collisionChecker.checkTouchCollision(x, y);
                     if (object == null) continue;
-                    ((Circle) object).onTouchDown();
+                    ((Circle) object).onTouchDown(x, y);
                     int key = event.getPointerId(i);
                     touchedCircles.put(key, (Circle) object);
                 }return true;
             case MotionEvent.ACTION_MOVE:
-                return true;
+                for(int i = 0; i < pointerCount; ++i) {
+                    int key = event.getPointerId(i);
+                    Circle found = touchedCircles.get(key);
+                    if(found == null) return true;
+                    Circle circle = touchedCircles.get(key);
+                    circle.onMove(x, y);
+
+                }return true;
             case MotionEvent.ACTION_UP:
                 int key = event.getPointerId(0);
                 Circle found = touchedCircles.get(key);
