@@ -55,7 +55,7 @@ public class MainGame {
         collisionChecker = new CollisionChecker();
         add(Layer.controller, collisionChecker);
 
-        Circle circle = new Circle(100, 100);
+        Circle circle = new Circle(500, 500);
         add(Layer.circle, circle);
 
         Arrow arrow = new Arrow(200, 200);
@@ -101,13 +101,15 @@ public class MainGame {
         int action = event.getAction();
         int x = (int) event.getX();
         int y = (int) event.getY();
+
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 GameObject object = collisionChecker.checkTouchCollision(x, y);
-                remove(object);
-
+                ((Circle)object).onTouchDown();
                 return true;
             case MotionEvent.ACTION_MOVE:
+                return true;
+            case MotionEvent.ACTION_UP:
                 return true;
         }
         return false;
