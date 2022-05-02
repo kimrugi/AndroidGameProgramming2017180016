@@ -22,7 +22,6 @@ public class Barrier extends Sprite implements GameObject {
 
     public void setAngle(float angle) {
         this.angle = angle;
-
     }
 
     @Override

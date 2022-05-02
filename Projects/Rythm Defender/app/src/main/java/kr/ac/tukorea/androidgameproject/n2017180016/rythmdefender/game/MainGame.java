@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.CollisionHelper;
@@ -97,20 +98,39 @@ public class MainGame {
         }
     }
 
+    HashMap<Integer, Circle> touchedCircles = new HashMap<Integer, Circle>();
+
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         int x = (int) event.getX();
         int y = (int) event.getY();
-
+        int pointerCount = event.getPointerCount();
+        if(pointerCount > 3) pointerCount = 3;
+        GameObject object;
         switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                GameObject object = collisionChecker.checkTouchCollision(x, y);
-                if(object == null) return true;
-                ((Circle)object).onTouchDown();
+            case MotionEvent.ACTION_DOWN: {
+                object = collisionChecker.checkTouchCollision(x, y);
+                if (object == null) return true;
+                ((Circle) object).onTouchDown();
+                int key = event.getPointerId(0);
+                touchedCircles.put(key, (Circle) object);
                 return true;
+            }
+            case MotionEvent.ACTION_POINTER_DOWN:
+                for(int i = 0; i < pointerCount; ++i) {
+                    object = collisionChecker.checkTouchCollision(x, y);
+                    if (object == null) continue;
+                    ((Circle) object).onTouchDown();
+                    int key = event.getPointerId(i);
+                    touchedCircles.put(key, (Circle) object);
+                }return true;
             case MotionEvent.ACTION_MOVE:
                 return true;
             case MotionEvent.ACTION_UP:
+                int key = event.getPointerId(0);
+                Circle found = touchedCircles.get(key);
+                if(found == null) return true;
+                found.onTouchUp();
                 return true;
         }
         return false;
