@@ -6,8 +6,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
 
-import java.util.ArrayList;
-
 import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.BoxCollidable;
 import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.GameObject;
 import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.Metrics;
@@ -24,22 +22,26 @@ public class Bullet implements GameObject, BoxCollidable, Recyclable {
     protected static float laserWidth;
 
     protected RectF boundingBox = new RectF();
-    public static Bullet get(float x, float y) {
+    private float power;
+
+    public static Bullet get(float x, float y, float power) {
         Bullet bullet = (Bullet) RecycleBin.get(Bullet.class);
         if(bullet != null){
-            bullet.set(x,y);
+            bullet.set(x,y, power);
             return bullet;
         }
-        return new Bullet(x, y);
+        return new Bullet(x, y, power);
     }
 
-    private void set(float x, float y) {
+    private void set(float x, float y, float power) {
         this.x = x;
         this.y = y;
+        this.power = power;
+
     }
 
-    private Bullet(float x, float y) {
-        set(x,y);
+    private Bullet(float x, float y, float power) {
+        set(x,y, power);
         this.length = Metrics.size(R.dimen.laser_length);
         this.dy = -Metrics.size(R.dimen.laser_speed);
 
@@ -77,5 +79,9 @@ public class Bullet implements GameObject, BoxCollidable, Recyclable {
     @Override
     public void finish() {
 
+    }
+
+    public float getPower() {
+        return power;
     }
 }

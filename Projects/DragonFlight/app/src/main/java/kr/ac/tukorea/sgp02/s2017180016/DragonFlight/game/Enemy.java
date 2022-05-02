@@ -1,5 +1,6 @@
 package kr.ac.tukorea.sgp02.s2017180016.DragonFlight.game;
 
+import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -18,10 +19,13 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
 
 
     private static final String TAG = Enemy.class.getSimpleName();
+
     private int level;
+    private float life;
+    private float maxLife;
     protected float dy;
     protected RectF boundingRect = new RectF();
-
+    private Gauge gauge;
     protected static int[] BITMAP_IDS = {
             R.mipmap.enemy_01, R.mipmap.enemy_02,R.mipmap.enemy_03,R.mipmap.enemy_04,
             R.mipmap.enemy_05,R.mipmap.enemy_06,R.mipmap.enemy_07,R.mipmap.enemy_08,
@@ -47,13 +51,21 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
         this.y =-size/2;
         dy = speed;
         this.level = level;
+        life = level * 10;
+        maxLife = life;
+        gauge.setValue(1.0f);
     }
 
     private Enemy(int level, float x, float speed) {
         //super(x, y, R.dimen.enemy_radius, R.mipmap.f_01_01);
         super(x, -size/2, size, size, BITMAP_IDS[level - 1], 6, 0);
         this.level = level;
+        maxLife = life = level * 10;
         dy = speed;
+        gauge = new Gauge(Metrics.size(R.dimen.enemy_gauge_width_fg), R.color.enemy_gauge_fg,
+                Metrics.size(R.dimen.enemy_gauge_width_bg), R.color.enemy_gauge_bg,
+                size);
+        gauge.setValue(1.0f);
         Log.d(TAG, "Enemy Created");
     }
 
@@ -78,6 +90,13 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
     }
 
     @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+
+        gauge.draw(canvas, x, y + size / 2);
+    }
+
+    @Override
     public RectF getBoundingRect() {
         return boundingRect;
     }
@@ -89,5 +108,12 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
 
     public int getScore() {
         return level * 10;
+    }
+
+    public Boolean decreaseLife(float power) {
+        life -= power;
+        if(life <= 0) return true;
+        gauge.setValue(life / maxLife);
+        return false;
     }
 }

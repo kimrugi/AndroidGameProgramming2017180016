@@ -70,4 +70,7 @@ public class Score implements GameObject {
         }
     }
 
+    public float get() {
+        return score;
+    }
 }

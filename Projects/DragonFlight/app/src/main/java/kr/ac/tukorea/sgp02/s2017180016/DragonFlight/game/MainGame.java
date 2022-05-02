@@ -4,14 +4,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.BoxCollidable;
-import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.CollisionHelper;
 import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.Metrics;
 import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.R;
 import kr.ac.tukorea.sgp02.s2017180016.DragonFlight.framework.GameObject;
@@ -42,7 +40,7 @@ public class MainGame {
     //private ArrayList<GameObject> objects = new ArrayList<>();
     private ArrayList<ArrayList<GameObject>> layers;
     public enum Layer{
-        bullet, enemy, player, ui, controller, COUNT
+        bg, bullet, enemy, player, ui, controller, COUNT
     }
 
 
@@ -67,6 +65,9 @@ public class MainGame {
 
         score = new Score();
         add(Layer.ui, score);
+
+        add(Layer.bg, new HorzScrollBackground(R.mipmap.bg_city, Metrics.size(R.dimen.bg_speed_city)));
+        add(Layer.bg, new HorzScrollBackground(R.mipmap.clouds, Metrics.size(R.dimen.bg_speed_cloud)));
 
         collisionPaint.setColor(Color.RED);
         collisionPaint.setStyle(Paint.Style.STROKE);
