@@ -20,7 +20,8 @@ public class ObjectGenerator implements GameObject {
         timePassed += MainGame.getInstance().frameTime;
         if(timePassed >= randomTime){
             addCircle();
-            randomTime = random.nextFloat() * 5 + 3 + timePassed;
+            //randomTime = random.nextFloat() * 5 + 3 + timePassed;
+            randomTime = 5f + timePassed;
         }
     }
 
@@ -30,19 +31,16 @@ public class ObjectGenerator implements GameObject {
         float cy = random.nextFloat() * 900 + 100;
 
         float stime = timePassed;
-        float endTime = timePassed + random.nextFloat() * 10 + 5;
+        float endTime = timePassed + 5;
         float etime = timePassed + endTime;
         ArrayList<ArrowInfo> arrowList = new ArrayList<>();
         for(int i = 0; i < random.nextInt(5)+1; ++i){
-            float ax = random.nextFloat();
-            float ay = random.nextFloat();
-            float length = ax +ay;
-            ax = ax / length;
-            ay = ay / length;
-            float astime = stime + random.nextFloat() *
-                    (etime - stime - 1);
-            float aetime = astime + 1;
-            arrowList.add(new ArrowInfo(ax, ay, astime, aetime));
+//            float astime = stime + random.nextFloat() *
+//                    (etime - stime - 1);
+            float astime = stime + i;
+            float aetime = astime + 2;
+            float degree = random.nextFloat() * 360f;
+            arrowList.add(new ArrowInfo(degree, astime, aetime));
         }
         Circle circle = new Circle(cx, cy, stime, etime, arrowList);
         MainGame.getInstance().add(MainGame.Layer.circle, circle);
