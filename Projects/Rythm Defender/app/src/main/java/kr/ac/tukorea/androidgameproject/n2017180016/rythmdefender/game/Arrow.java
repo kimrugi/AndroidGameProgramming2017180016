@@ -42,6 +42,7 @@ public class Arrow extends Sprite implements GameObject {
         }
         if(collisionCheck()){
             game.remove(this);
+            game.score.add(10);
             return;
         }
         float factor = (game.totalTime - startTime) / (endTime - startTime);

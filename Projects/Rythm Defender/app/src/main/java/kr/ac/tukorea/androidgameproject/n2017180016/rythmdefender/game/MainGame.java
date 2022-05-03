@@ -16,7 +16,7 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Recy
 public class MainGame {
     private static final String TAG = MainGame.class.getSimpleName();
     private final Paint collisionPaint = new Paint();
-//    Score score;
+    Score score;
 
     private CollisionChecker collisionChecker;
 
@@ -56,6 +56,10 @@ public class MainGame {
 
         ObjectGenerator generator = new ObjectGenerator();
         add(Layer.controller, generator);
+
+        score = new Score();
+        score.set(0);
+        add(Layer.ui, score);
         //Circle circle = new Circle(500, 500);
         //add(Layer.circle, circle);
 

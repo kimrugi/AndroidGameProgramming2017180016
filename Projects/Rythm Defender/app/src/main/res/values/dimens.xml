@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="arrow_distance">150dp</dimen>
+    <dimen name="score_margin_right">10dp</dimen>
+    <dimen name="score_margin_top">10dp</dimen>
+    <dimen name="score_digit_width">20sp</dimen>
     <item name="barrier_time" type="dimen" format="float">0.05</item>
 </resources>
