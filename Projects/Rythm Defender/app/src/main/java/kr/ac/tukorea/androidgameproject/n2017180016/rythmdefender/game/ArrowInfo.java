@@ -20,8 +20,8 @@ public class ArrowInfo {
     }
 
     public Arrow build(float x, float y, Circle circle) {
-        this.x += x;
-        this.y += y;
-        return new Arrow(this.x, this.y, angle, circle, stratTime, endTime);
+        //this.x += x;
+        //this.y += y;
+        return new Arrow(this.x, this.y, x, y, angle, circle, stratTime, endTime);
     }
 }
