@@ -3,6 +3,8 @@ package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 import android.graphics.RectF;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.R;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.BoxCollidable;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameObject;
@@ -16,13 +18,33 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
     private float angle;
     private int touchx;
     private int touchy;
+    private float startTime, endTime;
 
-    public Circle(float x, float y) {
+    private ArrayList<Arrow> arrows = new ArrayList<>();
+    public Circle(float x, float y, float startTime, float endTime, ArrayList<ArrowInfo> arrowInfos) {
         super(x, y, radius, radius, R.mipmap.hitcircle);
+        this.startTime = startTime;
+        this.endTime = endTime;
+        for(ArrowInfo info : arrowInfos){
+            arrows.add(info.build(x, y, this));
+        }
     }
 
     @Override
     public void update() {
+        MainGame game = MainGame.getInstance();
+        if(game.totalTime >= endTime){
+            game.remove(this);
+            return;
+        }
+        Arrow removeArrow = null;
+        for(Arrow arrow : arrows){
+            if(game.totalTime >= arrow.startTime){
+                removeArrow = arrow;
+                game.add(MainGame.Layer.arrow, arrow);
+            }
+        }
+        if(removeArrow != null) arrows.remove(removeArrow);
         //angle += 1;
         //if(barrier == null) return;
     }

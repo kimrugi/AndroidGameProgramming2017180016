@@ -7,9 +7,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
-import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.CollisionHelper;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameObject;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Recyclable;
@@ -29,7 +27,7 @@ public class MainGame {
         return singleton;
     }
 
-    public float frameTime;
+    public float frameTime, totalTime;
 
     private MainGame() {
     }
@@ -56,11 +54,13 @@ public class MainGame {
         collisionChecker = new CollisionChecker();
         add(Layer.controller, collisionChecker);
 
-        Circle circle = new Circle(500, 500);
-        add(Layer.circle, circle);
+        ObjectGenerator generator = new ObjectGenerator();
+        add(Layer.controller, generator);
+        //Circle circle = new Circle(500, 500);
+        //add(Layer.circle, circle);
 
-        Arrow arrow = new Arrow(200, 200);
-        add(Layer.arrow, arrow);
+        //Arrow arrow = new Arrow(x, y, circle, 200, 200);
+        //add(Layer.arrow, arrow);
 
     }
 
@@ -72,8 +72,9 @@ public class MainGame {
 
     }
 
-    public void update(int elapsedNanos) {
+    public void update(long elapsedNanos) {
         frameTime = elapsedNanos * 1e-9f; // 1_000_000_000.0f;
+        totalTime += frameTime;
         for(ArrayList<GameObject> objects : layers) {
             for (GameObject gobj : objects) {
                 gobj.update();
