@@ -74,6 +74,7 @@ public class MainGame {
 
     public void update(long elapsedNanos) {
         frameTime = elapsedNanos * 1e-9f; // 1_000_000_000.0f;
+        //frameTime = 0.1f; // 1_000_000_000.0f;
         totalTime += frameTime;
         for(ArrayList<GameObject> objects : layers) {
             for (GameObject gobj : objects) {

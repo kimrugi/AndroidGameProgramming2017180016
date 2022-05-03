@@ -27,8 +27,10 @@ public class Arrow extends Sprite implements GameObject {
         this.circle = circle;
         this.originx = this.x;
         this.originy = this.y;
-        headx = cx;
-        heady = cy;
+        float radius = circle.getRadius();
+        float distance = radius - width/2;
+        headx = (float) (cx + Math.cos(Math.toRadians(angle)) * distance);
+        heady = (float) (cy + Math.sin(Math.toRadians(angle)) * distance);
     }
 
     @Override
@@ -38,10 +40,24 @@ public class Arrow extends Sprite implements GameObject {
             game.remove(this);
             return;
         }
+        if(collisionCheck()){
+            game.remove(this);
+            return;
+        }
         float factor = (game.totalTime - startTime) / (endTime - startTime);
-        factor *= factor;
+        factor *= factor * factor;
         x = Util.lerp(headx, originx, factor);
         y = Util.lerp(heady, originy, factor);
+    }
+
+    private boolean collisionCheck() {
+        MainGame game = MainGame.getInstance();
+        if(game.totalTime < endTime - Metrics.floatValue(R.dimen.barrier_time)) return false;
+        float barrierAngle = circle.getBarrierAngle() - 180;
+        if(barrierAngle < 0) barrierAngle += 360;
+        if(Math.abs(barrierAngle - angle) < 45f )
+            return true;
+        return false;
     }
 
     @Override
