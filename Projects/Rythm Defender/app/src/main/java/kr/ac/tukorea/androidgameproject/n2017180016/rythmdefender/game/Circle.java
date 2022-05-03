@@ -12,7 +12,7 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Metr
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Sprite;
 
 public class Circle extends Sprite implements GameObject, BoxCollidable {
-    static private final float radius = Metrics.height / 6;
+    public static final float radius = Metrics.height / 6;
     private static final String TAG = Circle.class.getSimpleName();
     private Barrier barrier;
     private float angle;
@@ -35,6 +35,7 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
         MainGame game = MainGame.getInstance();
         if(game.totalTime >= endTime){
             game.remove(this);
+            game.remove(barrier);
             return;
         }
         Arrow removeArrow = null;

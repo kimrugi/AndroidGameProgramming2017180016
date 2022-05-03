@@ -9,7 +9,7 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Metr
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Sprite;
 
 public class Barrier extends Sprite implements GameObject {
-    private static final float radius = Metrics.width / 12 * 1.3f;
+    private static final float radius = Circle.radius * 1.3f;
     private float angle;
     private Rect srcRect = new Rect();
 
