@@ -22,11 +22,11 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
 
     private ArrayList<Arrow> arrows = new ArrayList<>();
     public Circle(float x, float y, float startTime, float endTime, ArrayList<ArrowInfo> arrowInfos) {
-        super(x, y, radius, radius, R.mipmap.hitcircle);
+        super(Metrics.getWidth(x), Metrics.getHeight(y), radius, radius, R.mipmap.hitcircle);
         this.startTime = startTime;
         this.endTime = endTime;
         for(ArrowInfo info : arrowInfos){
-            arrows.add(info.build(x, y, this));
+            arrows.add(info.build(this.x, this.y, this));
         }
     }
 

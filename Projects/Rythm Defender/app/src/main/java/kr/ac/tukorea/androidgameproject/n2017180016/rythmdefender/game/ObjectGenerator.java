@@ -28,7 +28,8 @@ public class ObjectGenerator implements GameObject {
     private void addCircle() {
 
         float cx = random.nextFloat() * 600 + 200;
-        float cy = random.nextFloat() * 600 + 200;
+        float cy = random.nextFloat() * 600 + 200 + Circle.radius;
+        //float cy = Circle.radius + 1000;
 
         float stime = timePassed;
         float endTime = timePassed + 10;
