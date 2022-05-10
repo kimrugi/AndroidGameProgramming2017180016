@@ -3,11 +3,13 @@ package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.R;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameObject;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Recyclable;
@@ -19,6 +21,7 @@ public class MainGame {
     Score score;
 
     private CollisionChecker collisionChecker;
+    private MediaPlayer mediaPlayer;
 
     public static MainGame getInstance() {
         if (singleton == null) {
@@ -60,12 +63,10 @@ public class MainGame {
         score = new Score();
         score.set(0);
         add(Layer.ui, score);
-        //Circle circle = new Circle(500, 500);
-        //add(Layer.circle, circle);
 
-        //Arrow arrow = new Arrow(x, y, circle, 200, 200);
-        //add(Layer.arrow, arrow);
-
+        //play Music
+        mediaPlayer = MediaPlayer.create(GameView.view.getContext(), R.raw.lune_8bit);
+        mediaPlayer.start();
     }
 
     private void initLayers(int count) {
@@ -85,12 +86,7 @@ public class MainGame {
                 gobj.update();
             }
         }
-//        checkCollision();
     }
-
-    /*private void checkCollision() {
-
-    }*/
 
     public ArrayList<GameObject> objectsAt(Layer layer){
         return layers.get(layer.ordinal());
