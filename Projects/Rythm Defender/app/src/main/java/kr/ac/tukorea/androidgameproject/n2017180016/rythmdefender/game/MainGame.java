@@ -57,7 +57,7 @@ public class MainGame {
         collisionChecker = new CollisionChecker();
         add(Layer.controller, collisionChecker);
 
-        ObjectGenerator generator = new ObjectGenerator();
+        ObjectGenerator generator = new ObjectGenerator("null");
         add(Layer.controller, generator);
 
         score = new Score();
@@ -74,7 +74,6 @@ public class MainGame {
         for(int i = 0; i < count; ++i){
             layers.add(new ArrayList<>());
         }
-
     }
 
     public void update(long elapsedNanos) {
