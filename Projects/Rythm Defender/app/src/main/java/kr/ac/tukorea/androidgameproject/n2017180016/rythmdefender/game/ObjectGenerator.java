@@ -68,8 +68,8 @@ public class ObjectGenerator implements GameObject {
             JSONArray points = object.getJSONArray("points");
             for(int i = 0; i < points.length(); ++i){
                 JSONObject point = points.getJSONObject(i);
-                int startTime = point.getInt("startTime");
-                int endTime = point.getInt("endTime");
+                float startTime = (float) point.getDouble("startTime");
+                float endTime = (float) point.getDouble("endTime");
                 int x = point.getInt("x");
                 int y = point.getInt("y");
 
@@ -77,8 +77,8 @@ public class ObjectGenerator implements GameObject {
                 JSONArray arrows = point.getJSONArray("arrow");
                 for(int j = 0; j < arrows.length(); ++j){
                     JSONObject arrow = arrows.getJSONObject(j);
-                    int astartTime = arrow.getInt("startTime");
-                    int aendTime = arrow.getInt("endTime");
+                    float astartTime = (float) arrow.getDouble("startTime");
+                    float aendTime = (float) arrow.getDouble("endTime");
                     float degree =(float) arrow.getDouble("degree");
 
                     ArrowInfo arrowInfo = new ArrowInfo(degree, astartTime, aendTime);
