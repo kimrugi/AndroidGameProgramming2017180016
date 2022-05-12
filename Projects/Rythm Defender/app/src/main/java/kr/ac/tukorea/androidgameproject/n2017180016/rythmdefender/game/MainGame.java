@@ -57,7 +57,7 @@ public class MainGame {
         collisionChecker = new CollisionChecker();
         add(Layer.controller, collisionChecker);
 
-        ObjectGenerator generator = new ObjectGenerator("null");
+        ObjectGenerator generator = new ObjectGenerator("sample.json");
         add(Layer.controller, generator);
 
         score = new Score();

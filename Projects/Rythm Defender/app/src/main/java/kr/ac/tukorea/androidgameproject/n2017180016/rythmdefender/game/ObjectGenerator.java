@@ -16,12 +16,34 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Game
 
 public class ObjectGenerator implements GameObject {
     private Random random = new Random();
-    private float randomTime, timePassed;
+    private float timePassed;
 
+    private ArrayList<CircleInfo> circleInfos = new ArrayList<>();
+    private float nextCircleTime = 0;
     ObjectGenerator(String jsonFileName) {
-        randomTime = 0;
+        //randomTime = 0;
         timePassed = 0;
         parseJson(jsonFileName);
+        nextCircleTime = circleInfos.get(0).getStartTime();
+    }
+
+    @Override
+    public void update() {
+        timePassed += MainGame.getInstance().frameTime;
+        while(timePassed >= nextCircleTime){
+            Circle circle = circleInfos.remove(0).build();
+            MainGame.getInstance().add(MainGame.Layer.circle, circle);
+            if(circleInfos.isEmpty()){
+                nextCircleTime = 100000000.f;
+                return;
+            }
+            nextCircleTime = circleInfos.get(0).getStartTime();
+        }
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+
     }
 
     private void parseJson(String jsonFileName) {
@@ -51,31 +73,29 @@ public class ObjectGenerator implements GameObject {
                 int x = point.getInt("x");
                 int y = point.getInt("y");
 
+                ArrayList<ArrowInfo> arrowInfos = new ArrayList<>();
                 JSONArray arrows = point.getJSONArray("arrow");
-                /*for(int j = 0; j < arrows.length(); ++j){
+                for(int j = 0; j < arrows.length(); ++j){
                     JSONObject arrow = arrows.getJSONObject(j);
-                    int startTime = arrow.getInt("startTime");
-                    int endTime = arrow.getInt("endTime");
-                    int x = arrow.getInt("x");
-                    int y = arrow.getInt("y");
-                }*/
+                    int astartTime = arrow.getInt("startTime");
+                    int aendTime = arrow.getInt("endTime");
+                    float degree =(float) arrow.getDouble("degree");
+
+                    ArrowInfo arrowInfo = new ArrowInfo(degree, astartTime, aendTime);
+                    arrowInfos.add(arrowInfo);
+                }
+                CircleInfo circleInfo = new CircleInfo();
+                circleInfo.setStratTime(startTime).setEndTime(endTime)
+                        .setX(x).setY(y)
+                        .setArrowInfos(arrowInfos);
+                circleInfos.add(circleInfo);
             }
         }catch (JSONException ex){
-
+            ex.printStackTrace();
         }
     }
 
-    @Override
-    public void update() {
-        timePassed += MainGame.getInstance().frameTime;
-        if(timePassed >= randomTime){
-            addCircle();
-            //randomTime = random.nextFloat() * 5 + 3 + timePassed;
-            randomTime = 5f + timePassed;
-        }
-    }
-
-    private void addCircle() {
+    private void addRandomCircle() {
 
         float cx = random.nextFloat() * 600 + 200;
         float cy = random.nextFloat() * 600 + 200 + Circle.radius;
@@ -95,10 +115,5 @@ public class ObjectGenerator implements GameObject {
         }
         Circle circle = new Circle(cx, cy, stime, etime, arrowList);
         MainGame.getInstance().add(MainGame.Layer.circle, circle);
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-
     }
 }
