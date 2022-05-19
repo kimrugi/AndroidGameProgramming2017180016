@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1">
-        <kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView
+        <kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.chartMaking.ChartMakeView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/black"/>
