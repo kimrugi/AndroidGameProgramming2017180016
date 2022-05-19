@@ -30,7 +30,8 @@ public class MainGame {
         return singleton;
     }
 
-    public float frameTime, totalTime;
+    //public float frameTime;
+    public float totalTime;
 
     private MainGame() {
     }
@@ -77,9 +78,11 @@ public class MainGame {
     }
 
     public void update(long elapsedNanos) {
-        frameTime = elapsedNanos * 1e-9f; // 1_000_000_000.0f;
+        //frameTime = elapsedNanos * 1e-9f; // 1_000_000_000.0f;
         //frameTime = 0.1f; // 1_000_000_000.0f;
-        totalTime += frameTime;
+        //totalTime += frameTime;
+        totalTime = mediaPlayer.getCurrentPosition() / 1000.f;
+
         for(ArrayList<GameObject> objects : layers) {
             for (GameObject gobj : objects) {
                 gobj.update();
