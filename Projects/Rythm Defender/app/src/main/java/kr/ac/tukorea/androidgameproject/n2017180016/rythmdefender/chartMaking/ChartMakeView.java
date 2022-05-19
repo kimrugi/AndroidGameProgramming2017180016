@@ -18,6 +18,5 @@ public class ChartMakeView extends GameView {
     @Override
     protected void initView() {
         super.initView();
-        MainGame
     }
 }
