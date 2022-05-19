@@ -39,6 +39,32 @@ public class MainGame {
     private static MainGame singleton;
 
     private ArrayList<ArrayList<GameObject>> layers;
+
+    public void startMusic() {
+        mediaPlayer.start();
+    }
+
+    public void pauseMusic() {
+        mediaPlayer.pause();
+    }
+
+    public void changeToArrowMode() {
+    }
+
+    public void finishSaveJSON() {
+
+    }
+
+    public void setBps(int bps) {
+
+    }
+
+    public void changeMusicProgress(int percent) {
+        int duration = mediaPlayer.getDuration();
+        int milTime = (int)((float)duration / 1000 * percent);
+        mediaPlayer.seekTo(milTime);
+    }
+
     public enum Layer{
         background, circle, arrow, barrier, ui, controller, COUNT
     }

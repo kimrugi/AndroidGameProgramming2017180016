@@ -24,11 +24,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="start"
+            android:onClick="onStartButton"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="pause"/>
+            android:text="pause"
+            android:onClick="onPauseButton"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -37,18 +39,22 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="arrow" />
+            android:text="arrow"
+            android:onClick="onArrowButton"/>
 
         <EditText
+            android:id="@+id/BPSEditText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:hint="bit per second"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="finish &amp; save" />
+            android:text="finish &amp; save"
+            android:onClick="onFinishButton"/>
 
 
     </LinearLayout>
@@ -58,7 +64,10 @@
         android:layout_height="30dp">
 
         <SeekBar
+            android:id="@+id/musicSeekBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:max="1000"
+            />
     </LinearLayout>
 </LinearLayout>
