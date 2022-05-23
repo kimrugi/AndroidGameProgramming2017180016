@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        Intent intent = new Intent(this, ChartMakingActivity.class);
+        startActivity(intent);
     }
 
     public void onStartButton(View view) {

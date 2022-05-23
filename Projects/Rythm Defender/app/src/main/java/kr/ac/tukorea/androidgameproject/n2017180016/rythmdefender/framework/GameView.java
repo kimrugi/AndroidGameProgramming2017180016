@@ -25,6 +25,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private boolean initialized;
     private boolean running;
 
+    protected MainGame game;
+
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         //initView();
@@ -43,10 +45,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
     }
 
-    private void initView() {
+    protected void initView() {
         view = this;
 
-        MainGame game = MainGame.getInstance();
+        game = MainGame.getInstance();
         game.init();
 
         fpsPaint.setColor(Color.BLUE);
@@ -68,7 +70,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             framesPerSecond = 1_000_000_000 / elapsed;
             //Log.v(TAG, "Elapsed: " + elapsed + " FPS: " + framesPerSecond);
             previousTimeNanos = now;
-            MainGame.getInstance().update(elapsed);
+            game.update(elapsed);
             invalidate();
         }
 
@@ -78,15 +80,15 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        MainGame.getInstance().draw(canvas);
+        game.draw(canvas);
         canvas.drawText("FPS: " + framesPerSecond, framesPerSecond * 10, 100, fpsPaint);
 //        Log.d(TAG, "onDraw()");
-        canvas.drawText(""+MainGame.getInstance().objectCount(), 10, 100, fpsPaint);
+        canvas.drawText(""+game.objectCount(), 10, 100, fpsPaint);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return MainGame.getInstance().onTouchEvent(event);
+        return game.onTouchEvent(event);
     }
 
     public void pauseGame() {

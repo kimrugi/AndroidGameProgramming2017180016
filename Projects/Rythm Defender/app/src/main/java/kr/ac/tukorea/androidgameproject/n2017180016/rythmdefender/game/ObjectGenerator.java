@@ -16,21 +16,18 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Game
 
 public class ObjectGenerator implements GameObject {
     private Random random = new Random();
-    private float timePassed;
 
     private ArrayList<CircleInfo> circleInfos = new ArrayList<>();
     private float nextCircleTime = 0;
     ObjectGenerator(String jsonFileName) {
-        //randomTime = 0;
-        timePassed = 0;
         parseJson(jsonFileName);
         nextCircleTime = circleInfos.get(0).getStartTime();
     }
 
     @Override
     public void update() {
-        timePassed += MainGame.getInstance().frameTime;
-        while(timePassed >= nextCircleTime){
+        float totalTime = MainGame.getInstance().totalTime;
+        while(totalTime >= nextCircleTime){
             Circle circle = circleInfos.remove(0).build();
             MainGame.getInstance().add(MainGame.Layer.circle, circle);
             if(circleInfos.isEmpty()){
@@ -100,10 +97,10 @@ public class ObjectGenerator implements GameObject {
         float cx = random.nextFloat() * 600 + 200;
         float cy = random.nextFloat() * 600 + 200 + Circle.radius;
         //float cy = Circle.radius + 1000;
-
-        float stime = timePassed;
-        float endTime = timePassed + 10;
-        float etime = timePassed + endTime;
+        float totalTime = MainGame.getInstance().totalTime;
+        float stime = totalTime;
+        float endTime = totalTime + 10;
+        float etime = totalTime + endTime;
         ArrayList<ArrowInfo> arrowList = new ArrayList<>();
         for(int i = 0; i < random.nextInt(5)+1; ++i){
 //            float astime = stime + random.nextFloat() *
