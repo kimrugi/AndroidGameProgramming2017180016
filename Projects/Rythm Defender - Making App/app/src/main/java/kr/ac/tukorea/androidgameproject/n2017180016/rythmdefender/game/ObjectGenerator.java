@@ -16,9 +16,9 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Game
 
 public class ObjectGenerator implements GameObject {
     private Random random = new Random();
-
     private ArrayList<CircleInfo> circleInfos = new ArrayList<>();
     private float nextCircleTime = 0;
+    private int nextCircleIndex = 0;
     ObjectGenerator(String jsonFileName) {
         parseJson(jsonFileName);
         nextCircleTime = circleInfos.get(0).getStartTime();
@@ -28,13 +28,14 @@ public class ObjectGenerator implements GameObject {
     public void update() {
         float totalTime = MainGame.getInstance().totalTime;
         while(totalTime >= nextCircleTime){
-            Circle circle = circleInfos.remove(0).build();
+            Circle circle = circleInfos.get(nextCircleIndex).build();
             MainGame.getInstance().add(MainGame.Layer.circle, circle);
             if(circleInfos.isEmpty()){
                 nextCircleTime = 100000000.f;
                 return;
             }
-            nextCircleTime = circleInfos.get(0).getStartTime();
+            nextCircleIndex++;
+            nextCircleTime = circleInfos.get(nextCircleIndex).getStartTime();
         }
     }
 
