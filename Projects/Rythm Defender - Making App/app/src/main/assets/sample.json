@@ -1,0 +1,41 @@
+{
+  "musicName": "Jump Up Super Star",
+  "points": [
+    {
+      "startTime": 1,
+      "endTime": 10,
+      "x": 300,
+      "y": 250,
+      "arrow":[
+        {
+          "startTime" : 1,
+          "endTime" : 3,
+          "degree" : 100
+        },
+        {
+          "startTime": 5,
+          "endTime": 9,
+          "degree": 200
+        }
+      ]
+    },
+    {
+      "startTime": 5,
+      "endTime": 20,
+      "x": 1000,
+      "y": 1000,
+      "arrow":[
+        {
+          "startTime": 6,
+          "endTime": 9,
+          "degree": 180
+        },
+        {
+          "startTime": 10,
+          "endTime": 13,
+          "degree": 0
+        }
+      ]
+    }
+  ]
+}
