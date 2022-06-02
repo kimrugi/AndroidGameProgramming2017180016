@@ -14,6 +14,7 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game.MainGame;
 public class ChartMakingActivity extends AppCompatActivity {
     public SeekBar musicBar;
     static private ChartMakingActivity activity;
+    private boolean isUserPressed = false;
 
     static public ChartMakingActivity getActivity() {return activity;}
 
@@ -26,19 +27,24 @@ public class ChartMakingActivity extends AppCompatActivity {
         musicBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if(isUserPressed){
+                    MainGame.getInstance().changeMusicProgress(i);
+                }
 
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                MainGame.getInstance().pauseMusic();
+                //MainGame.getInstance().pauseMusic();
+                isUserPressed = true;
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                int time = seekBar.getProgress();
+                isUserPressed = false;
+                /*int time = seekBar.getProgress();
                 MainGame.getInstance().changeMusicProgress(time);
-                MainGame.getInstance().startMusic();
+                MainGame.getInstance().startMusic();*/
             }
         });
         ChartMakingActivity.activity = this;
