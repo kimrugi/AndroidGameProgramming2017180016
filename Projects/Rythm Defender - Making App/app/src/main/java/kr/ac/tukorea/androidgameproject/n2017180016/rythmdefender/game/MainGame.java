@@ -23,6 +23,11 @@ public class MainGame {
 
     private CollisionChecker collisionChecker;
     private MediaPlayer mediaPlayer;
+    private ObjectGenerator objectGenerator;
+
+    public enum Layer{
+        background, circle, arrow, barrier, ui, controller, COUNT
+    }
 
     public static MainGame getInstance() {
         if (singleton == null) {
@@ -61,19 +66,29 @@ public class MainGame {
     }
 
     public void changeMusicProgress(int percent) {
+        ArrayList<Integer> layerList = new ArrayList<Integer>();
+        layerList.add(Layer.circle.ordinal());
+        layerList.add(Layer.arrow.ordinal());
+        layerList.add(Layer.barrier.ordinal());
+
+        for(Integer index : layerList) {
+            ArrayList<GameObject> objects = layers.get(index);
+            objects.clear();
+        }
+
         int duration = mediaPlayer.getDuration();
         int milTime = (int)((float)duration / 1000 * percent);
         mediaPlayer.seekTo(milTime);
+
+        totalTime = milTime / 1000.f;
+
+        objectGenerator.onTimeChanged(totalTime);
     }
 
     private int convertToProgress(int time){
         int duration = mediaPlayer.getDuration();
         int percent = (int)(time / ((float)duration / 1000));
         return percent;
-    }
-
-    public enum Layer{
-        background, circle, arrow, barrier, ui, controller, COUNT
     }
 
     public static void clear() {
@@ -91,8 +106,8 @@ public class MainGame {
         collisionChecker = new CollisionChecker();
         add(Layer.controller, collisionChecker);
 
-        ObjectGenerator generator = new ObjectGenerator("sample.json");
-        add(Layer.controller, generator);
+        objectGenerator = new ObjectGenerator("sample.json");
+        add(Layer.controller, objectGenerator);
 
         score = new Score();
         score.set(0);

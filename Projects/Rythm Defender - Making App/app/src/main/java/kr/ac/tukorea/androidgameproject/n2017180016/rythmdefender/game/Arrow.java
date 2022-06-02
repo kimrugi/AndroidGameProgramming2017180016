@@ -12,7 +12,7 @@ public class Arrow extends Sprite implements GameObject {
     static private final float height = Metrics.height / 24;
     static private final float width = Metrics.height / 12;
 
-    public float startTime;
+    private float startTime;
     private float endTime;
     private float angle;
     private Circle circle;
@@ -68,5 +68,25 @@ public class Arrow extends Sprite implements GameObject {
         canvas.rotate(angle, x, y);
         canvas.drawBitmap(bitmap, null, dstRect, null);
         canvas.restore();
+    }
+
+    public float getStartTime() {
+        return startTime;
+    }
+
+    public float getEndTime() {
+        return endTime;
+    }
+
+    public void onTimeChanged(float time) {
+        MainGame game = MainGame.getInstance();
+        if(time >= endTime){
+            game.remove(this);
+            return;
+        }
+        float factor = (time - startTime) / (endTime - startTime);
+        factor *= factor * factor;
+        x = Util.lerp(headx, originx, factor);
+        y = Util.lerp(heady, originy, factor);
     }
 }

@@ -47,4 +47,8 @@ public class CircleInfo {
     public float getStartTime() {
         return this.stratTime;
     }
+
+    public float getEndTime(){
+        return this.endTime;
+    }
 }

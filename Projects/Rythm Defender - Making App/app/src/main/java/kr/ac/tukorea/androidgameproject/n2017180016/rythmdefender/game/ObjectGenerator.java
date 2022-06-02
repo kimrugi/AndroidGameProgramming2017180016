@@ -30,12 +30,29 @@ public class ObjectGenerator implements GameObject {
         while(totalTime >= nextCircleTime){
             Circle circle = circleInfos.get(nextCircleIndex).build();
             MainGame.getInstance().add(MainGame.Layer.circle, circle);
-            if(circleInfos.isEmpty()){
+            nextCircleIndex++;
+            if(circleInfos.size() <= nextCircleIndex){
                 nextCircleTime = 100000000.f;
                 return;
             }
-            nextCircleIndex++;
             nextCircleTime = circleInfos.get(nextCircleIndex).getStartTime();
+        }
+    }
+
+    public void onTimeChanged(float time){
+        for(int index = 0; index < circleInfos.size(); ++index){
+            CircleInfo info = circleInfos.get(index);
+            float start = info.getStartTime();
+            if(start > time) {
+                nextCircleIndex = index;
+                nextCircleTime = start;
+                break;
+            }
+            float end = info.getEndTime();
+            if(end < time) continue;
+            Circle circle = info.build();
+            MainGame.getInstance().add(MainGame.Layer.circle, circle);
+            circle.onTimeChanged(time);
         }
     }
 

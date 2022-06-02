@@ -21,6 +21,9 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
     private float startTime, endTime;
 
     private ArrayList<Arrow> arrows = new ArrayList<>();
+    private float nextArrowTime = 0;
+    private int nextArrowIndex = 0;
+
     public Circle(float x, float y, float startTime, float endTime, ArrayList<ArrowInfo> arrowInfos) {
         super(Metrics.getWidth(x), Metrics.getHeight(y), radius, radius, R.mipmap.hitcircle);
         this.startTime = startTime;
@@ -38,14 +41,19 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
             game.remove(barrier);
             return;
         }
-        Arrow removeArrow = null;
-        for(Arrow arrow : arrows){
-            if(game.totalTime >= arrow.startTime){
-                removeArrow = arrow;
-                game.add(MainGame.Layer.arrow, arrow);
+        //Arrow removeArrow = null;
+        while(game.totalTime >= nextArrowTime){
+            Arrow arrow = arrows.get(nextArrowIndex);
+            MainGame.getInstance().add(MainGame.Layer.arrow, arrow);
+            nextArrowIndex++;
+            if(arrows.size() <= nextArrowIndex){
+                nextArrowTime = 100000000.f;
+                return;
             }
+
+            nextArrowTime = arrows.get(nextArrowIndex).getStartTime();
         }
-        if(removeArrow != null) arrows.remove(removeArrow);
+        //if(removeArrow != null) arrows.remove(removeArrow);
         //angle += 1;
         //if(barrier == null) return;
     }
@@ -83,5 +91,22 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
 
     public float getBarrierAngle() {
         return angle;
+    }
+
+    public void onTimeChanged(float time) {
+        for (int index = 0; index < arrows.size(); ++index) {
+            Arrow arrow = arrows.get(index);
+            float start = arrow.getStartTime();
+            if (start > time) {
+                nextArrowIndex = index;
+                nextArrowTime = start;
+                break;
+            }
+            float end = arrow.getEndTime();
+            if (end < time) continue;
+
+            MainGame.getInstance().add(MainGame.Layer.arrow, arrow);
+            arrow.onTimeChanged(time);
+        }
     }
 }
