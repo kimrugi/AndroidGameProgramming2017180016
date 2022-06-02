@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.R;
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.app.ChartMakingActivity;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameObject;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Recyclable;
@@ -65,6 +66,12 @@ public class MainGame {
         mediaPlayer.seekTo(milTime);
     }
 
+    private int convertToProgress(int time){
+        int duration = mediaPlayer.getDuration();
+        int percent = (int)(time / ((float)duration / 1000));
+        return percent;
+    }
+
     public enum Layer{
         background, circle, arrow, barrier, ui, controller, COUNT
     }
@@ -108,6 +115,8 @@ public class MainGame {
         //frameTime = 0.1f; // 1_000_000_000.0f;
         //totalTime += frameTime;
         totalTime = mediaPlayer.getCurrentPosition() / 1000.f;
+        int progressTime = convertToProgress(mediaPlayer.getCurrentPosition());
+        ChartMakingActivity.getActivity().setMusicTime(progressTime);
 
         for(ArrayList<GameObject> objects : layers) {
             for (GameObject gobj : objects) {
