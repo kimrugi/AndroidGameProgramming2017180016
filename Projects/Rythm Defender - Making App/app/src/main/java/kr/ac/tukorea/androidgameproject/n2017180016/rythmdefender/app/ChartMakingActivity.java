@@ -30,7 +30,6 @@ public class ChartMakingActivity extends AppCompatActivity {
                 if(isUserPressed){
                     MainGame.getInstance().changeMusicProgress(i);
                 }
-
             }
 
             @Override

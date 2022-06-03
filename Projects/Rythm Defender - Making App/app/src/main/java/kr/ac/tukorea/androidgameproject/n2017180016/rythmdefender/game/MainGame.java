@@ -25,6 +25,11 @@ public class MainGame {
     private MediaPlayer mediaPlayer;
     private ObjectGenerator objectGenerator;
 
+    public enum EditMode{
+        bit, arrow, play, COUNT
+    }
+    private EditMode editMode = EditMode.bit;
+
     public enum Layer{
         background, circle, arrow, barrier, ui, controller, COUNT
     }
@@ -155,6 +160,60 @@ public class MainGame {
     HashMap<Integer, Circle> touchedCircles = new HashMap<Integer, Circle>();
 
     public boolean onTouchEvent(MotionEvent event) {
+        switch(editMode){
+            case bit:{
+                return bitTouchEvent(event);
+            }
+            case play: {
+                return playTouchEvent(event);
+            }
+            case arrow:{
+                return arrowTouchEvent(event);
+            }
+        }
+
+        return false;
+    }
+
+    public void add(Layer layer, GameObject gameObject) {
+        GameView.view.post(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<GameObject> objects = layers.get(layer.ordinal());
+                objects.add(gameObject);
+            }
+        });
+    }
+
+    public void remove(GameObject gameObject) {
+        GameView.view.post(new Runnable() {
+            @Override
+            public void run() {
+                for(ArrayList<GameObject> objects : layers) {
+                    boolean removed = objects.remove(gameObject);
+                    if (!removed) continue;
+                    if (gameObject instanceof Recyclable) {
+                        RecycleBin.add((Recyclable) gameObject);
+                    }
+                    break;
+                }
+            }
+        });
+    }
+
+    public int objectCount() {
+        int count = 0;
+        for(ArrayList<GameObject> objects : layers){
+            count += objects.size();
+        }
+        return count;
+    }
+
+    public void setEditMode(EditMode editMode){
+        this.editMode = editMode;
+    }
+
+    private boolean playTouchEvent(MotionEvent event){
         int action = event.getAction();
         int x = (int) event.getX();
         int y = (int) event.getY();
@@ -197,37 +256,12 @@ public class MainGame {
         return false;
     }
 
-    public void add(Layer layer, GameObject gameObject) {
-        GameView.view.post(new Runnable() {
-            @Override
-            public void run() {
-                ArrayList<GameObject> objects = layers.get(layer.ordinal());
-                objects.add(gameObject);
-            }
-        });
+    private boolean bitTouchEvent(MotionEvent event){
+
+        return false;
     }
 
-    public void remove(GameObject gameObject) {
-        GameView.view.post(new Runnable() {
-            @Override
-            public void run() {
-                for(ArrayList<GameObject> objects : layers) {
-                    boolean removed = objects.remove(gameObject);
-                    if (!removed) continue;
-                    if (gameObject instanceof Recyclable) {
-                        RecycleBin.add((Recyclable) gameObject);
-                    }
-                    break;
-                }
-            }
-        });
-    }
-
-    public int objectCount() {
-        int count = 0;
-        for(ArrayList<GameObject> objects : layers){
-            count += objects.size();
-        }
-        return count;
+    private boolean arrowTouchEvent(MotionEvent event) {
+        return false;
     }
 }
