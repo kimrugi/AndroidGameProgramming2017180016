@@ -58,5 +58,6 @@ public class BitModeGenerator extends ObjectGenerator{
 
         ArrowInfo arrowInfo = new ArrowInfo(arrowAngle, startTime, endTime);
         circle.addArrow(arrowInfo);
+        arrowAngle += 36.0f;
     }
 }
