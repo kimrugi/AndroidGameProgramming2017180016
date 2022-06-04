@@ -51,4 +51,8 @@ public class CircleInfo {
     public float getEndTime(){
         return this.endTime;
     }
+
+    public void addArrow(ArrowInfo arrow){
+        arrowInfos.add(arrow);
+    }
 }

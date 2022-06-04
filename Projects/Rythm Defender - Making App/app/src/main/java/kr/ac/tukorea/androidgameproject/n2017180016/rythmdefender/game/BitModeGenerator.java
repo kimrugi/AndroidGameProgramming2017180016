@@ -52,6 +52,11 @@ public class BitModeGenerator extends ObjectGenerator{
     }
     private void addArrow(CircleInfo circle){
         float totalTime = MainGame.getInstance().totalTime;
-        //circle.
+
+        float endTime = totalTime;
+        float startTime = endTime - 2.0f;
+
+        ArrowInfo arrowInfo = new ArrowInfo(arrowAngle, startTime, endTime);
+        circle.addArrow(arrowInfo);
     }
 }

@@ -13,6 +13,7 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.R;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.app.ChartMakingActivity;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameObject;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Metrics;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Recyclable;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.RecycleBin;
 
@@ -70,7 +71,9 @@ public class MainGame {
     }
 
     public void setBps(int bps) {
-
+        if(bitModeGenerator != null) {
+            bitModeGenerator.setBps(bps);
+        }
     }
 
     public float getDuration() {
@@ -273,7 +276,21 @@ public class MainGame {
     }
 
     private boolean bitTouchEvent(MotionEvent event){
-
+        int action = event.getAction();
+        switch (action){
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN:
+                int x = (int) event.getX();
+                BitModeGenerator.Position pos;
+                if(x < Metrics.width / 2){
+                    pos = BitModeGenerator.Position.left;
+                }
+                else{
+                    pos = BitModeGenerator.Position.right;
+                }
+                bitModeGenerator.addArrow(pos);
+                return true;
+        }
         return false;
     }
 
