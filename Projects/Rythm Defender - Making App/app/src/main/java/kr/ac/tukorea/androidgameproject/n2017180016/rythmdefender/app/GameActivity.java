@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.R;
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game.MainGame;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -22,5 +23,11 @@ public class GameActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility(uiOptions);
 
         setContentView(R.layout.activity_game);
+    }
+
+    @Override
+    public void onBackPressed() {
+        MainGame.getInstance().onBackPressed();
+        super.onBackPressed();
     }
 }

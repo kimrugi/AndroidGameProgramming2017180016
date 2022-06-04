@@ -1,6 +1,15 @@
 package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
 
 public class BitModeGenerator extends ObjectGenerator{
     private CircleInfo leftCircle;
@@ -59,5 +68,9 @@ public class BitModeGenerator extends ObjectGenerator{
         ArrowInfo arrowInfo = new ArrowInfo(arrowAngle, startTime, endTime);
         circle.addArrow(arrowInfo);
         arrowAngle += 36.0f;
+    }
+
+    public void saveBits(String jsonFileName){
+    
     }
 }

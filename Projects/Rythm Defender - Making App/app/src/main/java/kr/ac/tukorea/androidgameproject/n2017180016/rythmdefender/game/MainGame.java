@@ -24,8 +24,11 @@ public class MainGame {
 
     private CollisionChecker collisionChecker;
     private MediaPlayer mediaPlayer;
+
+    private ObjectGenerator generator;
     private ObjectGenerator objectGenerator;
     private BitModeGenerator bitModeGenerator;
+    protected String jsonFileName;
 
     public enum EditMode{
         bit, arrow, play, COUNT
@@ -132,15 +135,16 @@ public class MainGame {
         switch(editMode){
             case bit:
                 bitModeGenerator = new BitModeGenerator("Bit.json");
-                add(Layer.controller, bitModeGenerator);
+                generator = bitModeGenerator;
                 break;
             case play:
                 objectGenerator = new ObjectGenerator("sample.json");
-                add(Layer.controller, objectGenerator);
+                generator = bitModeGenerator;
                 break;
             case arrow:
                 break;
         }
+        add(Layer.controller, generator);
 
         score = new Score();
         score.set(0);
@@ -305,5 +309,13 @@ public class MainGame {
 
     private boolean arrowTouchEvent(MotionEvent event) {
         return false;
+    }
+
+
+    public void onBackPressed() {
+        if(bitModeGenerator != null){
+            bitModeGenerator.saveBits(jsonFileName);
+        }
+        pauseMusic();
     }
 }

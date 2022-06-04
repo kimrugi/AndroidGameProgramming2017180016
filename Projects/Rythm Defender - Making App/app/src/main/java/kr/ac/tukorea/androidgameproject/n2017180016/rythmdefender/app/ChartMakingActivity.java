@@ -48,6 +48,12 @@ public class ChartMakingActivity extends AppCompatActivity {
         ChartMakingActivity.activity = this;
     }
 
+    @Override
+    public void onBackPressed() {
+        MainGame.getInstance().onBackPressed();
+        super.onBackPressed();
+    }
+
     public void onStartButton(View view) {
         MainGame.getInstance().startMusic();
 
