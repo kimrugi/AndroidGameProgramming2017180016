@@ -97,7 +97,16 @@ public class MainGame {
 
         totalTime = milTime / 1000.f;
 
-        objectGenerator.onTimeChanged(totalTime);
+        switch(editMode){
+            case play:
+                objectGenerator.onTimeChanged(totalTime);
+                break;
+            case bit:
+                bitModeGenerator.onTimeChanged(totalTime);
+                break;
+            case arrow:
+                break;
+        }
     }
 
     private int convertToProgress(int time){
@@ -111,9 +120,9 @@ public class MainGame {
     }
 
     public void init() {
-
-        layers.clear();
         initLayers(Layer.COUNT.ordinal());
+
+        mediaPlayer = MediaPlayer.create(GameView.view.getContext(), R.raw.lune_8bit);
 
         collisionPaint.setColor(Color.RED);
         collisionPaint.setStyle(Paint.Style.STROKE);
@@ -122,7 +131,7 @@ public class MainGame {
         add(Layer.controller, collisionChecker);
         switch(editMode){
             case bit:
-                bitModeGenerator = new BitModeGenerator("sample.json");
+                bitModeGenerator = new BitModeGenerator("Bit.json");
                 add(Layer.controller, bitModeGenerator);
                 break;
             case play:
@@ -138,7 +147,7 @@ public class MainGame {
         add(Layer.ui, score);
 
         //play Music
-        mediaPlayer = MediaPlayer.create(GameView.view.getContext(), R.raw.lune_8bit);
+
         mediaPlayer.start();
     }
 

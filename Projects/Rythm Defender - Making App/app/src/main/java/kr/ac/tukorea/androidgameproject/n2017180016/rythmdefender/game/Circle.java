@@ -43,6 +43,7 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
         }
         //Arrow removeArrow = null;
         while(game.totalTime >= nextArrowTime){
+            if(arrows.isEmpty()) return;
             Arrow arrow = arrows.get(nextArrowIndex);
             MainGame.getInstance().add(MainGame.Layer.arrow, arrow);
             nextArrowIndex++;

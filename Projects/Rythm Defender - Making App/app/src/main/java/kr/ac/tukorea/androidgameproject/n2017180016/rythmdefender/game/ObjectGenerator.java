@@ -22,7 +22,9 @@ public class ObjectGenerator implements GameObject {
 
     ObjectGenerator(String jsonFileName) {
         parseJson(jsonFileName);
-        nextCircleTime = circleInfos.get(0).getStartTime();
+        if(!circleInfos.isEmpty()) {
+            nextCircleTime = circleInfos.get(0).getStartTime();
+        }
     }
 
     @Override
