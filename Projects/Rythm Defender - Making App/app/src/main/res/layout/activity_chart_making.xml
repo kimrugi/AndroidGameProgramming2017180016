@@ -34,7 +34,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="bit"/>
+            android:text="bit"
+            android:onClick="onBitButton"/>
 
         <Button
             android:layout_width="wrap_content"

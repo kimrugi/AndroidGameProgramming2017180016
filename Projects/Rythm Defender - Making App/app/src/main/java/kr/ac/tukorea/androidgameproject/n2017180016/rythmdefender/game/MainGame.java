@@ -24,6 +24,7 @@ public class MainGame {
     private CollisionChecker collisionChecker;
     private MediaPlayer mediaPlayer;
     private ObjectGenerator objectGenerator;
+    private BitModeGenerator bitModeGenerator;
 
     public enum EditMode{
         bit, arrow, play, COUNT
@@ -59,7 +60,9 @@ public class MainGame {
         mediaPlayer.pause();
     }
 
-    public void changeToArrowMode() {
+    public void changeMode(EditMode mode) {
+        this.editMode = mode;
+        init();
     }
 
     public void finishSaveJSON() {
@@ -68,6 +71,10 @@ public class MainGame {
 
     public void setBps(int bps) {
 
+    }
+
+    public float getDuration() {
+        return (float)mediaPlayer.getDuration() / 1000.f;
     }
 
     public void changeMusicProgress(int percent) {
@@ -102,7 +109,7 @@ public class MainGame {
 
     public void init() {
 
-        //objects.clear();
+        layers.clear();
         initLayers(Layer.COUNT.ordinal());
 
         collisionPaint.setColor(Color.RED);
@@ -110,9 +117,18 @@ public class MainGame {
         collisionPaint.setStrokeWidth(10);
         collisionChecker = new CollisionChecker();
         add(Layer.controller, collisionChecker);
-
-        objectGenerator = new ObjectGenerator("sample.json");
-        add(Layer.controller, objectGenerator);
+        switch(editMode){
+            case bit:
+                bitModeGenerator = new BitModeGenerator("sample.json");
+                add(Layer.controller, bitModeGenerator);
+                break;
+            case play:
+                objectGenerator = new ObjectGenerator("sample.json");
+                add(Layer.controller, objectGenerator);
+                break;
+            case arrow:
+                break;
+        }
 
         score = new Score();
         score.set(0);

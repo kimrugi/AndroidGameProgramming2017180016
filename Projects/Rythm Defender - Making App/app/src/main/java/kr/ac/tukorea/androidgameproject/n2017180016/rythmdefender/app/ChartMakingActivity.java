@@ -3,7 +3,6 @@ package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -68,7 +67,7 @@ public class ChartMakingActivity extends AppCompatActivity {
     }
 
     public void onArrowButton(View view) {
-        MainGame.getInstance().changeToArrowMode();
+        MainGame.getInstance().changeMode(MainGame.EditMode.arrow);
     }
 
     public void onFinishButton(View view) {
@@ -77,5 +76,9 @@ public class ChartMakingActivity extends AppCompatActivity {
 
     public void setMusicTime(int time){
         musicBar.setProgress(time);
+    }
+
+    public void onBitButton(View view) {
+        MainGame.getInstance().changeMode(MainGame.EditMode.bit);
     }
 }
