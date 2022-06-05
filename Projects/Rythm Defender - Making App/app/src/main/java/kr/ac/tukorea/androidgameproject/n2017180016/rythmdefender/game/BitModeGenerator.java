@@ -100,8 +100,8 @@ public class BitModeGenerator extends ObjectGenerator{
                 for(ArrowInfo arrow : circle.arrowInfos){
                     JSONObject arrowObject = new JSONObject();
                     arrowObject.put("startTime", arrow.stratTime);
-                    arrowObject.put("endTime", arrow.stratTime);
-                    arrowObject.put("degree", arrow.stratTime);
+                    arrowObject.put("endTime", arrow.endTime);
+                    arrowObject.put("degree", arrow.angle);
                     arrows.put(arrowObject);
                 }
                 circleObject.put("arrow", arrows);

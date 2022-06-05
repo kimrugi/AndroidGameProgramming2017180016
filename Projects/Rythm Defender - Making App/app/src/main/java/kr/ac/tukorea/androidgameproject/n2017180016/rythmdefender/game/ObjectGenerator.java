@@ -1,18 +1,19 @@
 package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 
 import android.graphics.Canvas;
+import android.os.Environment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
 
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameObject;
-import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
 
 public class ObjectGenerator implements GameObject {
     private Random random = new Random();
@@ -21,10 +22,27 @@ public class ObjectGenerator implements GameObject {
     protected int nextCircleIndex = 0;
 
     ObjectGenerator(String jsonFileName) {
-        parseJson(jsonFileName);
+        String jsonString = loadFile(jsonFileName);
+        parseJson(jsonString);
         if(!circleInfos.isEmpty()) {
             nextCircleTime = circleInfos.get(0).getStartTime();
         }
+    }
+
+    private String loadFile(String jsonFileName) {
+        File file = new File(Environment.getExternalStorageDirectory() +
+                "/zRythmDefender/" + jsonFileName);
+        String result = new String();
+        String str;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            while(((str = br.readLine()) != null)){
+                result += str + "\n";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
@@ -64,18 +82,9 @@ public class ObjectGenerator implements GameObject {
 
     }
 
-    private void parseJson(String jsonFileName) {
-        String json;
-        //load
-        try {
-            InputStream is = GameView.view.getContext().getAssets().open(jsonFileName);
-            int fileSize = is.available();
-
-            byte[] buffer = new byte[fileSize];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
+    private void parseJson(String jsonString) {
+        String json = jsonString;
+        if(json.isEmpty()){
             return;
         }
         //parse
