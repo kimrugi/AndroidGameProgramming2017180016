@@ -30,13 +30,16 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
+        //퍼미션 요청
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
-                2);
+                new String[]{Manifest.permission.MANAGE_EXTERNAL_STORAGE},
+                MODE_PRIVATE);
+
         setContentView(R.layout.activity_main);
         if(!checkExternalStorage()){
             finishActivity(0);
         }
+
         Intent intent = new Intent(this, ChartMakingActivity.class);
         startActivity(intent);
     }
