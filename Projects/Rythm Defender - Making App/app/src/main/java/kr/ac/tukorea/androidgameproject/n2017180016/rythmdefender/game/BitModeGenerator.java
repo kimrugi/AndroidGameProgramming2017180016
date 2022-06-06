@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
 
 public class BitModeGenerator extends ObjectGenerator{
-    private static final String TAG = BitModeGenerator.class.getSimpleName();
     private CircleInfo leftCircle;
     private CircleInfo rightCircle;
     private float arrowAngle = 0;
@@ -76,67 +75,4 @@ public class BitModeGenerator extends ObjectGenerator{
         arrowAngle += 36.0f;
     }
 
-    public void saveBits(String jsonFileName){
-        String fileTitle = "Bit.json";
-        String dirString = Environment.getExternalStorageDirectory() + "/zRythmDefender/";
-        JSONObject object = getJSON();
-        saveJsonFile(fileTitle, dirString, object);
-    }
-
-    private JSONObject getJSON() {
-        try{
-            JSONObject object = new JSONObject();
-            object.put("musicName", "null");
-            String musicName = object.getString("musicName");
-
-            JSONArray points = new JSONArray();
-            for(CircleInfo circle : circleInfos){
-                JSONObject circleObject = new JSONObject();
-                circleObject.put("startTime", circle.stratTime);
-                circleObject.put("endTime", circle.endTime);
-                circleObject.put("x", circle.x);
-                circleObject.put("y", circle.y);
-                JSONArray arrows = new JSONArray();
-                for(ArrowInfo arrow : circle.arrowInfos){
-                    JSONObject arrowObject = new JSONObject();
-                    arrowObject.put("startTime", arrow.stratTime);
-                    arrowObject.put("endTime", arrow.endTime);
-                    arrowObject.put("degree", arrow.angle);
-                    arrows.put(arrowObject);
-                }
-                circleObject.put("arrow", arrows);
-                points.put(circleObject);
-            }
-            object.put("points", points);
-            Log.v(TAG, object.toString());
-            return object;
-        }catch (JSONException ex){
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    private void saveJsonFile(String fileTitle, String dirString, JSONObject object) {
-        File dirFile = new File(dirString);
-        File file = new File(dirString, fileTitle);
-        Log.v("Save", file.toString());
-        try {
-             if (!dirFile.exists()){
-                 dirFile.mkdir();
-             }
-
-            //파일이 존재하지 않다면 생성
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
-            FileWriter writer = new FileWriter(file);
-            writer.write(object.toString());
-
-            writer.close();
-
-        } catch (IOException e) {
-            Log.i("저장오류",e.getMessage());
-        }
-    }
 }

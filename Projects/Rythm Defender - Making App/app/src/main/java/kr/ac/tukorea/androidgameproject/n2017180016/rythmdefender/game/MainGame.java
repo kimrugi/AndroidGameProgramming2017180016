@@ -72,7 +72,8 @@ public class MainGame {
     }
 
     public void finishSaveJSON() {
-
+        generator.save("Result.json");
+        changeMode(EditMode.play);
     }
 
     public void setBps(int bps) {
@@ -130,7 +131,7 @@ public class MainGame {
                 generator = bitModeGenerator;
                 break;
             case play:
-                objectGenerator = new ObjectGenerator("sample.json");
+                objectGenerator = new ObjectGenerator("Result.json");
                 generator = bitModeGenerator;
                 break;
             case arrow:
@@ -311,7 +312,7 @@ public class MainGame {
 
     public void onBackPressed() {
         if(bitModeGenerator != null){
-            bitModeGenerator.saveBits(jsonFileName);
+            bitModeGenerator.save(jsonFileName);
         }
         pauseMusic();
     }
