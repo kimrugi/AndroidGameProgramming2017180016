@@ -12,12 +12,12 @@ public class Arrow extends Sprite implements GameObject {
     static private final float height = Metrics.height / 24;
     static private final float width = Metrics.height / 12;
 
-    private float startTime;
-    private float endTime;
-    private float angle;
-    private Circle circle;
-    private float headx, heady;
-    private float originx, originy;
+    protected float startTime;
+    protected float endTime;
+    protected float angle;
+    protected Circle circle;
+    protected float headx, heady;
+    protected float originx, originy;
 
     public Arrow(float x, float y, float cx, float cy, float angle, Circle circle, float startTime, float endTime) {
         super(x + cx, y +cy, width, height, R.mipmap.arrow);

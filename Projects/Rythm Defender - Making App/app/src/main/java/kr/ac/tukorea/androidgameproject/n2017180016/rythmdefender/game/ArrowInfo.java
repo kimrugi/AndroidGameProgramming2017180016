@@ -24,4 +24,8 @@ public class ArrowInfo {
         //this.y += y;
         return new Arrow(this.x, this.y, x, y, angle, circle, stratTime, endTime);
     }
+
+    public ArrowModeArrow buildToArrowMode(float x, float y, Circle circle){
+        return new ArrowModeArrow(this.x, this.y, x, y, angle, circle, stratTime, endTime);
+    }
 }
