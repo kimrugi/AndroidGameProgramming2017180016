@@ -37,4 +37,12 @@ public class Metrics {
     public static float getHeight(float pos){
         return pos * baseHeight;
     }
+
+    public static int getIntWidth(float pos){
+        return (int) (pos / baseWidth);
+    }
+
+    public static int getIntHeight(float pos){
+        return (int) (pos / baseHeight);
+    }
 }

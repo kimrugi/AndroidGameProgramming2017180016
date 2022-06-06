@@ -36,7 +36,7 @@ public class MainGame {
     public enum EditMode{
         bit, arrow, play, COUNT
     }
-    private EditMode editMode = EditMode.play;
+    private EditMode editMode = EditMode.arrow;
 
     public enum Layer{
         background, circle, arrow, barrier, ui, controller, COUNT
@@ -305,6 +305,42 @@ public class MainGame {
     }
 
     private boolean arrowTouchEvent(MotionEvent event) {
+        int action = event.getActionMasked();
+        int index = event.getActionIndex();
+        int id = event.getPointerId(index);
+        int x = (int) event.getX(index);
+        int y = (int) event.getY(index);
+        GameObject object;
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN: {
+                Circle circle = arrowModeGenerator.addCircle(x, y, id);
+                circle.onTouchDown(x, y);
+                touchedCircles.put(id, circle);
+                return true;
+            }
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:{
+                Circle found = touchedCircles.get(id);
+                arrowModeGenerator.finishCircle(found, id);
+                if (found == null) break;
+                found.onTouchUp();
+                touchedCircles.remove(id);
+                return true;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                int count = event.getPointerCount();
+                for(int pointerIndex = 0; pointerIndex < count; ++pointerIndex){
+                    int pointerId = event.getPointerId(pointerIndex);
+                    Circle found = touchedCircles.get(pointerId);
+                    if (found == null) break;
+                    //Circle circle = touchedCircles.get(key);
+                    int pointerX = (int) event.getX(pointerIndex);
+                    int pointerY = (int) event.getY(pointerIndex);
+                    found.onMove(pointerX, pointerY);
+                }return true;
+            }
+        }
         return false;
     }
 
