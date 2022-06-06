@@ -28,12 +28,14 @@ public class MainGame {
     private ObjectGenerator generator;
     private ObjectGenerator objectGenerator;
     private BitModeGenerator bitModeGenerator;
+    private ArrowModeGenerator arrowModeGenerator;
+
     protected String jsonFileName;
 
     public enum EditMode{
         bit, arrow, play, COUNT
     }
-    private EditMode editMode = EditMode.bit;
+    private EditMode editMode = EditMode.arrow;
 
     public enum Layer{
         background, circle, arrow, barrier, ui, controller, COUNT
@@ -99,17 +101,7 @@ public class MainGame {
         mediaPlayer.seekTo(milTime);
 
         totalTime = milTime / 1000.f;
-
-        switch(editMode){
-            case play:
-                objectGenerator.onTimeChanged(totalTime);
-                break;
-            case bit:
-                bitModeGenerator.onTimeChanged(totalTime);
-                break;
-            case arrow:
-                break;
-        }
+        generator.onTimeChanged(totalTime);
     }
 
     private int convertToProgress(int time){
@@ -142,6 +134,11 @@ public class MainGame {
                 generator = bitModeGenerator;
                 break;
             case arrow:
+                if(bitModeGenerator == null){
+                    bitModeGenerator = new BitModeGenerator("Bit.json");
+                }
+                arrowModeGenerator = new ArrowModeGenerator("Arrows.json", bitModeGenerator);
+                generator = arrowModeGenerator;
                 break;
         }
         add(Layer.controller, generator);

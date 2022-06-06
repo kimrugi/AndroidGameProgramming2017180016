@@ -85,6 +85,7 @@ public class ObjectGenerator implements GameObject {
     private void parseJson(String jsonString) {
         String json = jsonString;
         if(json.isEmpty()){
+            nextCircleTime = 100000000.f;
             return;
         }
         //parse
