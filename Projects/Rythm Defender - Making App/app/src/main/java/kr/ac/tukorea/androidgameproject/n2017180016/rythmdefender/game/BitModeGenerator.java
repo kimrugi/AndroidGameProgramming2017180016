@@ -15,6 +15,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Metrics;
 
 public class BitModeGenerator extends ObjectGenerator{
     private CircleInfo leftCircle;
@@ -37,7 +38,8 @@ public class BitModeGenerator extends ObjectGenerator{
         CircleInfo info = new CircleInfo();
         info.setStratTime(0).
                 setEndTime(MainGame.getInstance().getDuration())
-                .setX(x).setY(y)
+                .setX(Metrics.getWidth(x))
+                .setY(Metrics.getHeight(y))
                 .setArrowInfos(new ArrayList<>());
         circleInfos.add(info);
         return info;
