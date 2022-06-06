@@ -69,6 +69,7 @@ public class MainGame {
 
     public void changeMode(EditMode mode) {
         this.editMode = mode;
+        remove(generator);
         init();
     }
 

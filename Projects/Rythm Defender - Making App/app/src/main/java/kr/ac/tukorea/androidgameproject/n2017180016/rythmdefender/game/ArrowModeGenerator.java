@@ -8,10 +8,24 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Metr
 public class ArrowModeGenerator extends ObjectGenerator{
     BitModeGenerator bitMode;
     HashMap<Integer, CircleInfo> touchedCircles = new HashMap<Integer, CircleInfo>();
+    Circle leftCircle;
+    Circle rightCircle;
+
+    ArrayList<ArrowInfo> leftArrows;
+    ArrayList<ArrowInfo> rightArrows;
 
     ArrowModeGenerator(String jsonFileName, BitModeGenerator bitMode) {
         super(jsonFileName);
         this.bitMode = bitMode;
+        leftArrows = bitMode.leftCircle.arrowInfos;
+        rightArrows = bitMode.rightCircle.arrowInfos;
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        bitMode.update();
+
     }
 
     public Circle addCircle(int x, int y, int id) {
@@ -26,6 +40,13 @@ public class ArrowModeGenerator extends ObjectGenerator{
         touchedCircles.put(id, circleInfo);
         Circle circle = circleInfo.build();
         MainGame.getInstance().add(MainGame.Layer.circle, circle);
+        if(x < Metrics.width){
+            leftCircle = circle;
+            leftCircle.setArrows(leftArrows);
+        }else{
+            rightCircle = circle;
+            rightCircle.setArrows(rightArrows);
+        }
         return circle;
     }
 

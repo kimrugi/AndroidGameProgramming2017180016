@@ -14,15 +14,15 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Spri
 public class Circle extends Sprite implements GameObject, BoxCollidable {
     public static final float radius = Metrics.height / 6;
     private static final String TAG = Circle.class.getSimpleName();
-    private Barrier barrier;
-    private float angle;
-    private int touchx;
-    private int touchy;
-    private float startTime, endTime;
+    protected Barrier barrier;
+    protected float angle;
+    protected int touchx;
+    protected int touchy;
+    protected float startTime, endTime;
 
     private ArrayList<Arrow> arrows = new ArrayList<>();
-    private float nextArrowTime = 0;
-    private int nextArrowIndex = 0;
+    protected float nextArrowTime = 0;
+    protected int nextArrowIndex = 0;
 
     public Circle(float x, float y, float startTime, float endTime, ArrayList<ArrowInfo> arrowInfos) {
         super(Metrics.getWidth(x), Metrics.getHeight(y), radius, radius, R.mipmap.hitcircle);
@@ -108,6 +108,12 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
 
             MainGame.getInstance().add(MainGame.Layer.arrow, arrow);
             arrow.onTimeChanged(time);
+        }
+    }
+
+    public void setArrows(ArrayList<ArrowInfo> arrowInfos) {
+        for(ArrowInfo info : arrowInfos){
+            arrows.add(info.build(this.x, this.y, this));
         }
     }
 }

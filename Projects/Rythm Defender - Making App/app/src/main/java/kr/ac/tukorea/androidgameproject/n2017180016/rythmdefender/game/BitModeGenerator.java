@@ -18,8 +18,8 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Game
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Metrics;
 
 public class BitModeGenerator extends ObjectGenerator{
-    private CircleInfo leftCircle;
-    private CircleInfo rightCircle;
+    public CircleInfo leftCircle;
+    public CircleInfo rightCircle;
     private float arrowAngle = 0;
     private float bps;
     public enum Position {
@@ -31,6 +31,9 @@ public class BitModeGenerator extends ObjectGenerator{
         if(circleInfos.isEmpty()){
             leftCircle = addCircleInfo(250, 500);
             rightCircle = addCircleInfo(750, 500);
+        }else{
+            leftCircle = circleInfos.get(Position.left.ordinal());
+            rightCircle = circleInfos.get(Position.right.ordinal());
         }
     }
 
