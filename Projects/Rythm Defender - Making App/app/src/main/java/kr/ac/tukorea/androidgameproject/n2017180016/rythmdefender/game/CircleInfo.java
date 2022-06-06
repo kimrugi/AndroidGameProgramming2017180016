@@ -4,13 +4,13 @@ package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 import java.util.ArrayList;
 
 public class CircleInfo {
-    public float stratTime, endTime;
+    public float startTime, endTime;
     public float x;
     public float y;
     ArrayList<ArrowInfo> arrowInfos;
 
-    public CircleInfo setStratTime(float stratTime) {
-        this.stratTime = stratTime;
+    public CircleInfo setStartTime(float startTime) {
+        this.startTime = startTime;
         return this;
     }
 
@@ -41,11 +41,15 @@ public class CircleInfo {
     public Circle build() {
         //this.x += x;
         //this.y += y;
-        return new Circle(x, y, stratTime, endTime, arrowInfos);
+        return new Circle(x, y, startTime, endTime, arrowInfos);
+    }
+
+    public ArrowModeCircle buildToArrowMode(){
+        return new ArrowModeCircle(x, y, startTime, endTime, arrowInfos, this);
     }
 
     public float getStartTime() {
-        return this.stratTime;
+        return this.startTime;
     }
 
     public float getEndTime(){

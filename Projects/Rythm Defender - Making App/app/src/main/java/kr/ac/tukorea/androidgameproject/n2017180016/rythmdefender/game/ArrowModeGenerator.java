@@ -1,5 +1,7 @@
 package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,8 +10,8 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Metr
 public class ArrowModeGenerator extends ObjectGenerator{
     BitModeGenerator bitMode;
     HashMap<Integer, CircleInfo> touchedCircles = new HashMap<Integer, CircleInfo>();
-    Circle leftCircle;
-    Circle rightCircle;
+    ArrowModeCircle leftCircle;
+    ArrowModeCircle rightCircle;
 
     ArrayList<ArrowInfo> leftArrows;
     ArrayList<ArrowInfo> rightArrows;
@@ -31,14 +33,14 @@ public class ArrowModeGenerator extends ObjectGenerator{
     public Circle addCircle(int x, int y, int id) {
         CircleInfo circleInfo = new CircleInfo();
         float startTime = MainGame.getInstance().totalTime;
-        circleInfo.setStratTime(startTime).
+        circleInfo.setStartTime(startTime).
                 setX(Metrics.getIntWidth(x)).
                 setY(Metrics.getIntHeight(y)).
                 // 임시로 큰 값
                 setEndTime(startTime + 1000000).
                 setArrowInfos(new ArrayList<>());
         touchedCircles.put(id, circleInfo);
-        Circle circle = circleInfo.build();
+        ArrowModeCircle circle = circleInfo.buildToArrowMode();
         MainGame.getInstance().add(MainGame.Layer.circle, circle);
         if(x < Metrics.width){
             leftCircle = circle;

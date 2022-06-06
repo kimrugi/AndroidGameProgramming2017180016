@@ -3,14 +3,17 @@ package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Util;
 
 public class ArrowModeArrow extends Arrow{
+    boolean isActive = true;
     public ArrowModeArrow(float x, float y, float cx, float cy, float angle, Circle circle, float startTime, float endTime) {
         super(x, y, cx, cy, angle, circle, startTime, endTime);
     }
 
     @Override
     public void update() {
+        if(!isActive) return;
         MainGame game = MainGame.getInstance();
         if(game.totalTime >= endTime){
+            isActive = false;
             ((ArrowModeCircle)circle).finishArrow(this);
             circle = null;
             game.remove(this);

@@ -116,7 +116,7 @@ public class ObjectGenerator implements GameObject {
                     arrowInfos.add(arrowInfo);
                 }
                 CircleInfo circleInfo = new CircleInfo();
-                circleInfo.setStratTime(startTime).setEndTime(endTime)
+                circleInfo.setStartTime(startTime).setEndTime(endTime)
                         .setX(x).setY(y)
                         .setArrowInfos(arrowInfos);
                 circleInfos.add(circleInfo);
@@ -164,7 +164,7 @@ public class ObjectGenerator implements GameObject {
             JSONArray points = new JSONArray();
             for(CircleInfo circle : circleInfos){
                 JSONObject circleObject = new JSONObject();
-                circleObject.put("startTime", circle.stratTime);
+                circleObject.put("startTime", circle.startTime);
                 circleObject.put("endTime", circle.endTime);
                 circleObject.put("x", circle.x);
                 circleObject.put("y", circle.y);

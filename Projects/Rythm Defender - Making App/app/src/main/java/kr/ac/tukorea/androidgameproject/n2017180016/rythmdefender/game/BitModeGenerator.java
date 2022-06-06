@@ -1,20 +1,7 @@
 package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 
-import android.os.Environment;
-import android.util.Log;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
-import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Metrics;
 
 public class BitModeGenerator extends ObjectGenerator{
@@ -39,7 +26,7 @@ public class BitModeGenerator extends ObjectGenerator{
 
     private CircleInfo addCircleInfo(int x, int y) {
         CircleInfo info = new CircleInfo();
-        info.setStratTime(0).
+        info.setStartTime(0).
                 setEndTime(MainGame.getInstance().getDuration())
                 .setX(Metrics.getWidth(x))
                 .setY(Metrics.getHeight(y))
