@@ -27,6 +27,17 @@ public class ArrowModeArrow extends Arrow{
     }
 
     public void onMove(float angle){
+        angle -= 180;
+        this.angle = angle;
+        this.circle = circle;
 
+        float radius = circle.getRadius();
+        float originDist = radius * 2;
+        this.originx  = (float) (circleX + Math.cos(Math.toRadians(angle)) * originDist);
+        this.originy  = (float) (circleY + Math.sin(Math.toRadians(angle)) * originDist);
+
+        float circleDist = radius - width/2;
+        headx = (float) (circleX + Math.cos(Math.toRadians(angle)) * circleDist);
+        heady = (float) (circleY + Math.sin(Math.toRadians(angle)) * circleDist);
     }
 }

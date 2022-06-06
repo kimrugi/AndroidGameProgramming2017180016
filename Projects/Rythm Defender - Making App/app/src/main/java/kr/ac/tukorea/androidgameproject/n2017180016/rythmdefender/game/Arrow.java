@@ -9,8 +9,8 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Spri
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Util;
 
 public class Arrow extends Sprite implements GameObject {
-    static private final float height = Metrics.height / 24;
-    static private final float width = Metrics.height / 12;
+    static protected final float height = Metrics.height / 24;
+    static protected final float width = Metrics.height / 12;
 
     protected float startTime;
     protected float endTime;
@@ -18,6 +18,7 @@ public class Arrow extends Sprite implements GameObject {
     protected Circle circle;
     protected float headx, heady;
     protected float originx, originy;
+    protected float circleX, circleY;
 
     public Arrow(float x, float y, float cx, float cy, float angle, Circle circle, float startTime, float endTime) {
         super(x + cx, y +cy, width, height, R.mipmap.arrow);
@@ -27,6 +28,8 @@ public class Arrow extends Sprite implements GameObject {
         this.circle = circle;
         this.originx = this.x;
         this.originy = this.y;
+        this.circleX = cx;
+        this.circleY = cy;
         float radius = circle.getRadius();
         float distance = radius - width/2;
         headx = (float) (cx + Math.cos(Math.toRadians(angle)) * distance);
