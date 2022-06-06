@@ -1,8 +1,9 @@
 package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 
-import android.util.Log;
+import android.os.Build;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Metrics;
@@ -53,14 +54,40 @@ public class ArrowModeGenerator extends ObjectGenerator{
     }
 
     public void finishCircle(Circle circle, int id) {
+        ((ArrowModeCircle)circle).release();
         MainGame.getInstance().remove(circle);
         CircleInfo circleInfo = touchedCircles.get(id);
         if(circleInfo == null) return;
-
-        circleInfo.setEndTime(MainGame.getInstance().totalTime);
         // arrow 정보가 없으면 기록하지 않는다.
         if(circleInfo.arrowInfos.isEmpty()) return;
+        // arrowInfo를 startTime 오름차순 정렬
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            circleInfo.arrowInfos.sort(new Comparator<ArrowInfo>() {
+                @Override
+                public int compare(ArrowInfo o1, ArrowInfo o2) {
+                    if (o1.startTime > o2.startTime) {
+                        return 1;
+                    } else if (o1.startTime < o2.startTime) {
+                        return -1;
+                    }
+                    return 0;
+                }
+            });
+        }
+        circleInfo.setStartTime(circleInfo.arrowInfos.get(0).startTime - 4);
+        circleInfo.setEndTime(MainGame.getInstance().totalTime + 1);
 
         circleInfos.add(circleInfo);
+    }
+
+    @Override
+    public void onTimeChanged(float time) {
+        super.onTimeChanged(time);
+        bitMode.onTimeChanged(time);
+    }
+
+    @Override
+    public void save() {
+        super.save("Result.json");
     }
 }

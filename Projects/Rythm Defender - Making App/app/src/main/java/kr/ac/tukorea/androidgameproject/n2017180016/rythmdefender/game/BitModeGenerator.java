@@ -28,8 +28,8 @@ public class BitModeGenerator extends ObjectGenerator{
         CircleInfo info = new CircleInfo();
         info.setStartTime(0).
                 setEndTime(MainGame.getInstance().getDuration())
-                .setX(Metrics.getWidth(x))
-                .setY(Metrics.getHeight(y))
+                .setX(x)
+                .setY(y)
                 .setArrowInfos(new ArrayList<>());
         circleInfos.add(info);
         return info;
@@ -67,4 +67,8 @@ public class BitModeGenerator extends ObjectGenerator{
         arrowAngle += 36.0f;
     }
 
+    @Override
+    public void save() {
+        super.save("Bit.json");
+    }
 }

@@ -31,12 +31,12 @@ public class MainGame {
     private BitModeGenerator bitModeGenerator;
     private ArrowModeGenerator arrowModeGenerator;
 
-    protected String jsonFileName;
+    //protected String jsonFileName;
 
     public enum EditMode{
         bit, arrow, play, COUNT
     }
-    private EditMode editMode = EditMode.arrow;
+    private EditMode editMode = EditMode.bit;
 
     public enum Layer{
         background, circle, arrow, barrier, ui, controller, COUNT
@@ -70,11 +70,12 @@ public class MainGame {
     public void changeMode(EditMode mode) {
         this.editMode = mode;
         remove(generator);
+        generator.save();
         init();
     }
 
     public void finishSaveJSON() {
-        generator.save("Result.json");
+        generator.save();
         changeMode(EditMode.play);
     }
 
@@ -119,7 +120,10 @@ public class MainGame {
 
     public void init() {
         initLayers(Layer.COUNT.ordinal());
-
+        if(mediaPlayer != null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
         mediaPlayer = MediaPlayer.create(GameView.view.getContext(), R.raw.lune_8bit);
 
         collisionPaint.setColor(Color.RED);
@@ -241,10 +245,6 @@ public class MainGame {
         return count;
     }
 
-    public void setEditMode(EditMode editMode){
-        this.editMode = editMode;
-    }
-
     private boolean playTouchEvent(MotionEvent event){
         int action = event.getActionMasked();
         int index = event.getActionIndex();
@@ -348,7 +348,10 @@ public class MainGame {
 
     public void onBackPressed() {
         if(bitModeGenerator != null){
-            bitModeGenerator.save(jsonFileName);
+            //bitModeGenerator.save("Bit.json");
+        }
+        if(arrowModeGenerator != null){
+            //arrowModeGenerator.save("Result.json");
         }
         pauseMusic();
     }

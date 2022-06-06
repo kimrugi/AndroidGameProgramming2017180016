@@ -148,7 +148,11 @@ public class ObjectGenerator implements GameObject {
         MainGame.getInstance().add(MainGame.Layer.circle, circle);
     }
 
-    public void save(String jsonFileName){
+    public void save(){
+        //save("none.json");
+    }
+
+    protected void save(String jsonFileName){
         String fileTitle = jsonFileName;
         String dirString = Environment.getExternalStorageDirectory() + "/zRythmDefender/";
         JSONObject object = getJSON();
@@ -171,7 +175,7 @@ public class ObjectGenerator implements GameObject {
                 JSONArray arrows = new JSONArray();
                 for(ArrowInfo arrow : circle.arrowInfos){
                     JSONObject arrowObject = new JSONObject();
-                    arrowObject.put("startTime", arrow.stratTime);
+                    arrowObject.put("startTime", arrow.startTime);
                     arrowObject.put("endTime", arrow.endTime);
                     arrowObject.put("degree", arrow.angle);
                     arrows.put(arrowObject);
