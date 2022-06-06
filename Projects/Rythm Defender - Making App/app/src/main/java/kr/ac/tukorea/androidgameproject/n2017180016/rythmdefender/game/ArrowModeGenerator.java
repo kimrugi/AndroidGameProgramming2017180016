@@ -1,6 +1,7 @@
 package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 
 import android.os.Build;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -58,6 +59,7 @@ public class ArrowModeGenerator extends ObjectGenerator{
         MainGame.getInstance().remove(circle);
         CircleInfo circleInfo = touchedCircles.get(id);
         if(circleInfo == null) return;
+        touchedCircles.remove(id);
         // arrow 정보가 없으면 기록하지 않는다.
         if(circleInfo.arrowInfos.isEmpty()) return;
         // arrowInfo를 startTime 오름차순 정렬
@@ -78,7 +80,7 @@ public class ArrowModeGenerator extends ObjectGenerator{
         circleInfo.setEndTime(MainGame.getInstance().totalTime + 1);
 
         circleInfos.add(circleInfo);
-    }
+        }
 
     @Override
     public void onTimeChanged(float time) {
