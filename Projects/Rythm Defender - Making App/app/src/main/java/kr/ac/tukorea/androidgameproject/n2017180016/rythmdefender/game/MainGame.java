@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class MainGame {
     public enum EditMode{
         bit, arrow, play, COUNT
     }
-    private EditMode editMode = EditMode.arrow;
+    private EditMode editMode = EditMode.play;
 
     public enum Layer{
         background, circle, arrow, barrier, ui, controller, COUNT
@@ -132,7 +133,7 @@ public class MainGame {
                 break;
             case play:
                 objectGenerator = new ObjectGenerator("Result.json");
-                generator = bitModeGenerator;
+                generator = objectGenerator;
                 break;
             case arrow:
                 if(bitModeGenerator == null){
@@ -244,44 +245,42 @@ public class MainGame {
     }
 
     private boolean playTouchEvent(MotionEvent event){
-        int action = event.getAction();
-        int x = (int) event.getX();
-        int y = (int) event.getY();
-        int pointerCount = event.getPointerCount();
-        if(pointerCount > 3) pointerCount = 3;
+        int action = event.getActionMasked();
+        int index = event.getActionIndex();
+        int id = event.getPointerId(index);
+        int x = (int) event.getX(index);
+        int y = (int) event.getY(index);
         GameObject object;
         switch (action) {
-            case MotionEvent.ACTION_DOWN: {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN: {
                 object = collisionChecker.checkTouchCollision(x, y);
-                if (object == null) return true;
+                if (object == null) break;
+
                 ((Circle) object).onTouchDown(x, y);
-                int key = event.getPointerId(0);
-                touchedCircles.put(key, (Circle) object);
+                touchedCircles.put(id, (Circle) object);
                 return true;
             }
-            case MotionEvent.ACTION_POINTER_DOWN:
-                for(int i = 0; i < pointerCount; ++i) {
-                    object = collisionChecker.checkTouchCollision(x, y);
-                    if (object == null) continue;
-                    ((Circle) object).onTouchDown(x, y);
-                    int key = event.getPointerId(i);
-                    touchedCircles.put(key, (Circle) object);
-                }return true;
-            case MotionEvent.ACTION_MOVE:
-                for(int i = 0; i < pointerCount; ++i) {
-                    int key = event.getPointerId(i);
-                    Circle found = touchedCircles.get(key);
-                    if(found == null) return true;
-                    Circle circle = touchedCircles.get(key);
-                    circle.onMove(x, y);
-
-                }return true;
             case MotionEvent.ACTION_UP:
-                int key = event.getPointerId(0);
-                Circle found = touchedCircles.get(key);
-                if(found == null) return true;
+            case MotionEvent.ACTION_POINTER_UP:{
+                Circle found = touchedCircles.get(id);
+                if (found == null) break;
                 found.onTouchUp();
                 return true;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                int count = event.getPointerCount();
+                Log.d("TAG", "count: "+ count);
+                for(int pointerIndex = 0; pointerIndex < count; ++pointerIndex){
+                    int pointerId = event.getPointerId(pointerIndex);
+                    Circle found = touchedCircles.get(pointerId);
+                    if (found == null) break;
+                    //Circle circle = touchedCircles.get(key);
+                    int pointerX = (int) event.getX(pointerIndex);
+                    int pointerY = (int) event.getY(pointerIndex);
+                    found.onMove(pointerX, pointerY);
+                }return true;
+            }
         }
         return false;
     }
