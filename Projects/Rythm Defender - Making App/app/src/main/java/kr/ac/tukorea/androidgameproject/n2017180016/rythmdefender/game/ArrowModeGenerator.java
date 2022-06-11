@@ -21,8 +21,17 @@ public class ArrowModeGenerator extends ObjectGenerator{
     ArrowModeGenerator(String jsonFileName, BitModeGenerator bitMode) {
         super(jsonFileName);
         this.bitMode = bitMode;
-        leftArrows = bitMode.leftCircle.arrowInfos;
-        rightArrows = bitMode.rightCircle.arrowInfos;
+        leftArrows = new ArrayList<>();
+        rightArrows = new ArrayList<>();
+
+        for(ArrowInfo info : bitMode.leftCircle.arrowInfos){
+            leftArrows.add(new ArrowInfo(info.angle, info.startTime, info.endTime));
+        }
+        for(ArrowInfo info : bitMode.rightCircle.arrowInfos){
+            rightArrows.add(new ArrowInfo(info.angle, info.startTime, info.endTime));
+        }
+        /*leftArrows = bitMode.leftCircle.arrowInfos;
+        rightArrows = bitMode.rightCircle.arrowInfos;*/
     }
 
     @Override
@@ -46,10 +55,10 @@ public class ArrowModeGenerator extends ObjectGenerator{
         MainGame.getInstance().add(MainGame.Layer.circle, circle);
         if(x < Metrics.width){
             leftCircle = circle;
-            leftCircle.setArrows(leftArrows);
+            leftCircle.setModeArrows(leftArrows);
         }else{
             rightCircle = circle;
-            rightCircle.setArrows(rightArrows);
+            rightCircle.setModeArrows(rightArrows);
         }
         return circle;
     }

@@ -27,6 +27,7 @@ public class ArrowModeArrow extends Arrow{
     }
 
     public void onMove(float angle){
+        if(!isActive) return;
         angle -= 180;
         this.angle = angle;
         this.circle = circle;
