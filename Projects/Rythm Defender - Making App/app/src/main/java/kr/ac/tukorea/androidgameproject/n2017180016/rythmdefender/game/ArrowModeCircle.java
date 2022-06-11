@@ -12,7 +12,7 @@ public class ArrowModeCircle extends Circle{
 
     public ArrowModeCircle(float x, float y, float startTime, float endTime,
                            ArrayList<ArrowInfo> arrowInfos, CircleInfo circleInfo) {
-        super(x, y, startTime, endTime, arrowInfos);
+        super(x, y, startTime, endTime, arrowInfos, circleInfo);
         this.circleInfo = circleInfo;
     }
 

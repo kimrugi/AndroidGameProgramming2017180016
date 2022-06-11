@@ -34,9 +34,9 @@ public class MainGame {
     //protected String jsonFileName;
 
     public enum EditMode{
-        bit, arrow, play, COUNT
+        bit, arrow, play, modify, COUNT
     }
-    private EditMode editMode = EditMode.bit;
+    private EditMode editMode = EditMode.modify;
 
     public enum Layer{
         background, circle, arrow, barrier, ui, controller, COUNT
@@ -76,7 +76,7 @@ public class MainGame {
 
     public void finishSaveJSON() {
         generator.save();
-        changeMode(EditMode.play);
+        //changeMode(EditMode.play);
     }
 
     public void setBps(int bps) {
@@ -147,6 +147,9 @@ public class MainGame {
                 arrowModeGenerator = new ArrowModeGenerator("Arrows.json", bitModeGenerator);
                 generator = arrowModeGenerator;
                 break;
+            case modify:
+                generator = new ModifyModeGame("Result.json");
+                break;
         }
         add(Layer.controller, generator);
 
@@ -206,8 +209,53 @@ public class MainGame {
             case arrow:{
                 return arrowTouchEvent(event);
             }
+            case modify:{
+                return modifyTouchEvent(event);
+            }
         }
 
+        return false;
+    }
+
+    private boolean modifyTouchEvent(MotionEvent event) {
+        int action = event.getActionMasked();
+        int index = event.getActionIndex();
+        int id = event.getPointerId(index);
+        int x = (int) event.getX(index);
+        int y = (int) event.getY(index);
+        GameObject object;
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN: {
+                object = collisionChecker.checkTouchCollision(x, y);
+                if (object == null) break;
+                pauseMusic();
+                //((Circle) object).onTouchDown(x, y);
+                touchedCircles.put(id, (Circle) object);
+                return true;
+            }
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:{
+                startMusic();
+                Circle found = touchedCircles.get(id);
+                if (found == null) break;
+                //found.onTouchUp();
+                found.changePosition(x, y);
+                return true;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                int count = event.getPointerCount();
+                for(int pointerIndex = 0; pointerIndex < count; ++pointerIndex){
+                    int pointerId = event.getPointerId(pointerIndex);
+                    Circle found = touchedCircles.get(pointerId);
+                    if (found == null) break;
+                    //Circle circle = touchedCircles.get(key);
+                    int pointerX = (int) event.getX(pointerIndex);
+                    int pointerY = (int) event.getY(pointerIndex);
+                    found.changePosition(pointerX, pointerY);
+                }return true;
+            }
+        }
         return false;
     }
 

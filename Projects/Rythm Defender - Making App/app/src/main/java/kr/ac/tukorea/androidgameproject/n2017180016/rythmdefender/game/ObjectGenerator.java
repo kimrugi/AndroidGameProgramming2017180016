@@ -144,7 +144,7 @@ public class ObjectGenerator implements GameObject {
             float degree = random.nextFloat() * 360f;
             arrowList.add(new ArrowInfo(degree, astime, aetime));
         }
-        Circle circle = new Circle(cx, cy, stime, etime, arrowList);
+        Circle circle = new Circle(cx, cy, stime, etime, arrowList, null);
         MainGame.getInstance().add(MainGame.Layer.circle, circle);
     }
 

@@ -1,5 +1,6 @@
 package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 
+import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -24,7 +25,9 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
     protected float nextArrowTime = 0;
     protected int nextArrowIndex = 0;
 
-    public Circle(float x, float y, float startTime, float endTime, ArrayList<ArrowInfo> arrowInfos) {
+    CircleInfo circleInfo;
+
+    public Circle(float x, float y, float startTime, float endTime, ArrayList<ArrowInfo> arrowInfos, CircleInfo circleInfo) {
         super(Metrics.getWidth(x), Metrics.getHeight(y), radius, radius, R.mipmap.hitcircle);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -33,6 +36,13 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
         }
         if(arrows.isEmpty()) return;
         nextArrowTime = arrows.get(0).startTime;
+        this.circleInfo = circleInfo;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        setDstRect(radius, radius);
+        super.draw(canvas);
     }
 
     @Override
@@ -117,5 +127,12 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
         for(ArrowInfo info : arrowInfos){
             arrows.add(info.build(this.x, this.y, this));
         }
+    }
+
+    public void changePosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+        circleInfo.x = Metrics.getIntWidth(x);
+        circleInfo.y = Metrics.getIntHeight(y);
     }
 }

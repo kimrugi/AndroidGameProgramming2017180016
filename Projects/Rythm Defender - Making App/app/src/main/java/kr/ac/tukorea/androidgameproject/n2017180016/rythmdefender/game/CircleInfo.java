@@ -41,7 +41,7 @@ public class CircleInfo {
     public Circle build() {
         //this.x += x;
         //this.y += y;
-        return new Circle(x, y, startTime, endTime, arrowInfos);
+        return new Circle(x, y, startTime, endTime, arrowInfos, this);
     }
 
     public ArrowModeCircle buildToArrowMode(){
