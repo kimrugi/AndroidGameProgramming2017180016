@@ -31,6 +31,8 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
         for(ArrowInfo info : arrowInfos){
             arrows.add(info.build(this.x, this.y, this));
         }
+        if(arrows.isEmpty()) return;
+        nextArrowTime = arrows.get(0).startTime;
     }
 
     @Override
