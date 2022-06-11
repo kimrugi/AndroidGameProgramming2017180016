@@ -1,5 +1,7 @@
 package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -7,6 +9,7 @@ import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,6 +26,8 @@ public class MainGame {
 
     private CollisionChecker collisionChecker;
     private MediaPlayer mediaPlayer;
+
+    private String chartFileName;
 
     public static MainGame getInstance() {
         if (singleton == null) {
@@ -49,21 +54,20 @@ public class MainGame {
         mediaPlayer.pause();
     }
 
-    public void changeToArrowMode() {
+    public void setMusic(String fileName) {
+        AssetManager assets = GameView.view.getContext().getAssets();
+        mediaPlayer = new MediaPlayer();
+        try {
+            AssetFileDescriptor afd = assets.openFd(fileName);
+            mediaPlayer.setDataSource(afd);
+            mediaPlayer.prepare();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void finishSaveJSON() {
-
-    }
-
-    public void setBps(int bps) {
-
-    }
-
-    public void changeMusicProgress(int percent) {
-        int duration = mediaPlayer.getDuration();
-        int milTime = (int)((float)duration / 1000 * percent);
-        mediaPlayer.seekTo(milTime);
+    public void setChart(String chartFileName){
+        this.chartFileName = chartFileName;
     }
 
     public enum Layer{
@@ -85,7 +89,7 @@ public class MainGame {
         collisionChecker = new CollisionChecker();
         add(Layer.controller, collisionChecker);
 
-        ObjectGenerator generator = new ObjectGenerator("sample.json");
+        ObjectGenerator generator = new ObjectGenerator(chartFileName);
         add(Layer.controller, generator);
 
         score = new Score();
@@ -93,7 +97,10 @@ public class MainGame {
         add(Layer.ui, score);
 
         //play Music
-        mediaPlayer = MediaPlayer.create(GameView.view.getContext(), R.raw.lune_8bit);
+        if(mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(GameView.view.getContext(), R.raw.lune_8bit);
+            Log.e(TAG, "Music is not set. Instead, Play default Music");
+        }
         mediaPlayer.start();
     }
 
