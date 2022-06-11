@@ -99,6 +99,16 @@ public class ArrowModeGenerator extends ObjectGenerator{
 
     @Override
     public void save() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            circleInfos.sort(new Comparator<CircleInfo>() {
+                @Override
+                public int compare(CircleInfo a, CircleInfo b) {
+                    if(a.startTime > b.startTime) return 1;
+                    if(a.startTime < b.startTime) return -1;
+                    return 0;
+                }
+            });
+        }
         super.save("Result.json");
     }
 }
