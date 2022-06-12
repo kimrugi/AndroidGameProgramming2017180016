@@ -5,11 +5,19 @@
     "artist": "nicode",
     "albumArt": "album/lune.jpg",
     "note": "songs/Lune.json"
-  },{
-  "file": "mp3s/spear_of_justice.mp3",
-  "title": "Spear of Justice",
-  "artist": "toby fox",
-  "albumArt": "album/spear_of_justice.jpg",
-  "note": "songs/Spear_of_Justice.json"
-}
+  },
+  {
+    "file": "mp3s/spear_of_justice.mp3",
+    "title": "Spear of Justice",
+    "artist": "toby fox",
+    "albumArt": "album/spear_of_justice.jpg",
+    "note": "songs/Spear_of_Justice.json"
+  },
+  {
+    "file": "mp3s/love_letter.mp3",
+    "title": "Love Letter",
+    "artist": "Jade Kim",
+    "albumArt": "album/love_letter.jpg",
+    "note": "songs/love_letter.json"
+  }
 ]
