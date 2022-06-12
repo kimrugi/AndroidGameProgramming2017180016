@@ -78,6 +78,13 @@ public class ObjectGenerator implements GameObject {
                     float aendTime = (float) arrow.getDouble("endTime");
                     float degree =(float) arrow.getDouble("degree");
 
+                    while(degree < 0) {
+                        degree += 360f;
+                    }
+                    while(degree > 360){
+                        degree -= 360f;
+                    }
+
                     ArrowInfo arrowInfo = new ArrowInfo(degree, astartTime, aendTime);
                     arrowInfos.add(arrowInfo);
                 }

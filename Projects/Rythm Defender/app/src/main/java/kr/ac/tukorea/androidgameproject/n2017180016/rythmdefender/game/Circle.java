@@ -84,4 +84,16 @@ public class Circle extends Sprite implements GameObject, BoxCollidable {
     public float getBarrierAngle() {
         return angle;
     }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public boolean barrierInvalid() {
+        return barrier != null;
+    }
 }

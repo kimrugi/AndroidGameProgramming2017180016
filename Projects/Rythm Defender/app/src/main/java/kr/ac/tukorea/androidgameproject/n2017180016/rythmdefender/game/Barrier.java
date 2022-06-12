@@ -32,4 +32,8 @@ public class Barrier extends Sprite implements GameObject {
         canvas.drawBitmap(bitmap, null, dstRect, null);
         canvas.restore();
     }
+
+    public static float getRadius(){
+        return radius;
+    }
 }

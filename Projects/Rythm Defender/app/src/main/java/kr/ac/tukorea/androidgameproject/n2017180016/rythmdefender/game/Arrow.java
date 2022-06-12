@@ -1,6 +1,7 @@
 package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.R;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameObject;
@@ -18,6 +19,7 @@ public class Arrow extends Sprite implements GameObject {
     private Circle circle;
     private float headx, heady;
     private float originx, originy;
+    private boolean isActivated = false;
 
     public Arrow(float x, float y, float cx, float cy, float angle, Circle circle, float startTime, float endTime) {
         super(x + cx, y +cy, width, height, R.mipmap.arrow);
@@ -27,23 +29,30 @@ public class Arrow extends Sprite implements GameObject {
         this.circle = circle;
         this.originx = this.x;
         this.originy = this.y;
-        float radius = circle.getRadius();
+        float radius = Circle.radius * 1.1f;
         float distance = radius - width/2;
         headx = (float) (cx + Math.cos(Math.toRadians(angle)) * distance);
         heady = (float) (cy + Math.sin(Math.toRadians(angle)) * distance);
+        isActivated = true;
     }
 
     @Override
     public void update() {
+        if(!isActivated) return;
         MainGame game = MainGame.getInstance();
         if(game.totalTime >= endTime){
-            game.remove(this);
-            return;
-        }
-        if(collisionCheck()){
-            game.remove(this);
-            game.score.add(10);
-            return;
+            if(collisionCheckWithBarrier()){
+                game.remove(this);
+                isActivated = false;
+                game.score.add(10);
+                Log.d("TAG", "Barrier");
+                return;
+            }else if(game.totalTime >= endTime + Metrics.floatValue(R.dimen.barrier_time) ){
+                game.remove(this);
+                isActivated = false;
+                Log.d("TAG", "Circle");
+                return;
+            }
         }
         float factor = (game.totalTime - startTime) / (endTime - startTime);
         factor *= factor * factor;
@@ -51,9 +60,10 @@ public class Arrow extends Sprite implements GameObject {
         y = Util.lerp(heady, originy, factor);
     }
 
-    private boolean collisionCheck() {
-        MainGame game = MainGame.getInstance();
-        if(game.totalTime < endTime - Metrics.floatValue(R.dimen.barrier_time)) return false;
+    private boolean collisionCheckWithBarrier() {
+        if(!circle.barrierInvalid()) {
+            return false;}
+        //if(game.totalTime < endTime - Metrics.floatValue(R.dimen.barrier_time)) return false;
         float barrierAngle = circle.getBarrierAngle() - 180;
         if(barrierAngle < 0) barrierAngle += 360;
         if(Math.abs(barrierAngle - angle) < 45f )

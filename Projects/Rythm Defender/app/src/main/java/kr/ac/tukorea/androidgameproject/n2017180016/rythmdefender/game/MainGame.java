@@ -176,7 +176,6 @@ public class MainGame {
             }
             case MotionEvent.ACTION_MOVE: {
                 int count = event.getPointerCount();
-                Log.d("TAG", "count: "+ count);
                 for(int pointerIndex = 0; pointerIndex < count; ++pointerIndex){
                     int pointerId = event.getPointerId(pointerIndex);
                     Circle found = touchedCircles.get(pointerId);
