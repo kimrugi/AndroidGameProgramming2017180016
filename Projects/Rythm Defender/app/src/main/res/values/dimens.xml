@@ -5,4 +5,8 @@
     <dimen name="score_margin_top">10dp</dimen>
     <dimen name="score_digit_width">20sp</dimen>
     <item name="barrier_time" type="dimen" format="float">0.05</item>
+
+    <dimen name="album_thumb_size">64dp</dimen>
+    <dimen name="song_title_text_size">24sp</dimen>
+    <dimen name="song_artist_text_size">16sp</dimen>
 </resources>
