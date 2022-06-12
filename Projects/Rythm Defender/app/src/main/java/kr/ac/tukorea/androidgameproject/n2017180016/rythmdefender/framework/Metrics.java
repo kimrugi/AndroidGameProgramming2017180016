@@ -13,8 +13,8 @@ public class Metrics {
     public static void setSize(int width, int height){
         Metrics.width =width;
         Metrics.height = height;
-        Metrics.baseWidth = width / 1000;
-        Metrics.baseHeight = height / 1000;
+        Metrics.baseWidth = (float)width / 1000;
+        Metrics.baseHeight = (float)height / 1000;
     }
 
     public static float size(int dimenResId) {

@@ -28,6 +28,13 @@ public class Background extends Sprite {
         grayPaint.setARGB(level, level, level,level);
     }
 
+    public Background(int id) {
+        super(Metrics.width / 2, Metrics.height / 2, Metrics.width, Metrics.height, id);
+        grayPaint = new Paint();
+        int level = 50;
+        grayPaint.setARGB(level, level, level,level);
+    }
+
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);

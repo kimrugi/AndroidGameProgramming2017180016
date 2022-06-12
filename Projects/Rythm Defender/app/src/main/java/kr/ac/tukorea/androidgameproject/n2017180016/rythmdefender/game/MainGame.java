@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.util.Log;
+import android.view.Choreographer;
 import android.view.MotionEvent;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Game
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Recyclable;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.RecycleBin;
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Sprite;
 
 public class MainGame {
     private static final String TAG = MainGame.class.getSimpleName();
@@ -31,6 +33,8 @@ public class MainGame {
     private String chartFileName;
     private String musicFileName;
     private String backGroundFileName;
+    private Background pausedImage;
+    private boolean isPaused = false;
 
     public static MainGame getInstance() {
         if (singleton == null) {
@@ -51,10 +55,12 @@ public class MainGame {
 
     public void startMusic() {
         mediaPlayer.start();
+        isPaused = false;
     }
 
     public void pauseMusic() {
         mediaPlayer.pause();
+        isPaused = true;
     }
 
     public void setMusic(String fileName) {
@@ -72,6 +78,7 @@ public class MainGame {
             AssetFileDescriptor afd = assets.openFd(musicFileName);
             mediaPlayer.setDataSource(afd);
             mediaPlayer.prepare();
+            mediaPlayer.setLooping(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,6 +89,22 @@ public class MainGame {
     }
 
     public void setBackGround(String fileName) { this.backGroundFileName = fileName; }
+
+    public void onBackPressed() {
+        if (!isPaused) {
+            pauseMusic();
+            pausedImage = new Background(R.mipmap.paused);
+            add(Layer.ui, pausedImage);
+        }else {
+            remove(pausedImage);
+            Choreographer.getInstance().postFrameCallbackDelayed(new Choreographer.FrameCallback() {
+                @Override
+                public void doFrame(long l) {
+                    startMusic();
+                }
+            }, 3000);
+        }
+    }
 
     public enum Layer{
         background, circle, arrow, barrier, ui, controller, COUNT
@@ -116,6 +139,12 @@ public class MainGame {
             setMediaPlayer();
         }
         totalTime = -3.0f;
+        Choreographer.getInstance().postFrameCallbackDelayed(new Choreographer.FrameCallback() {
+            @Override
+            public void doFrame(long l) {
+                startMusic();
+            }
+        }, 3000);
     }
 
     private void initLayers(int count) {
@@ -128,12 +157,9 @@ public class MainGame {
     public void update(long elapsedNanos) {
         if(mediaPlayer.isPlaying()) {
             totalTime = mediaPlayer.getCurrentPosition() / 1000.f;
-        }else{
+        }else if (!isPaused){
             float frameTime = elapsedNanos * 1e-9f; // 1_000_000_000.0f;
             totalTime += frameTime;
-            if(totalTime > 0.0f){
-                startMusic();
-            }
         }
         for(ArrayList<GameObject> objects : layers) {
             for (GameObject gobj : objects) {

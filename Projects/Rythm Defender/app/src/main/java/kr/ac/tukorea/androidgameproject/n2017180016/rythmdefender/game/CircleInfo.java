@@ -25,7 +25,7 @@ public class CircleInfo {
     }
 
     public CircleInfo setY(float y) {
-        this.y = y;
+        this.y = y * 0.65f;
         return this;
     }
 

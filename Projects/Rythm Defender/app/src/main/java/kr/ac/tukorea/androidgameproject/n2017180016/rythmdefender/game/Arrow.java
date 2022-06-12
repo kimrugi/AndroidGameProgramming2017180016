@@ -76,6 +76,7 @@ public class Arrow extends Sprite implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
+        if(!isActivated) return;
         setDstRect(width, height);
         canvas.save();
         canvas.rotate(angle, x, y);
