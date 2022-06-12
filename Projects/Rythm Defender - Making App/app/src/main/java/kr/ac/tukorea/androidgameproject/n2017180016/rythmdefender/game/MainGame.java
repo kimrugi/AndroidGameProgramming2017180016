@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -37,7 +38,7 @@ public class MainGame {
         bit, arrow, play, modify, COUNT
     }
     private EditMode editMode = EditMode.modify;
-
+    private float playSpeed = 1.0f;
     public enum Layer{
         background, circle, arrow, barrier, ui, controller, COUNT
     }
@@ -124,7 +125,7 @@ public class MainGame {
             mediaPlayer.stop();
             mediaPlayer.release();
         }
-        mediaPlayer = MediaPlayer.create(GameView.view.getContext(), R.raw.lune_8bit);
+        mediaPlayer = MediaPlayer.create(GameView.view.getContext(), R.raw.spear_of_justice);
 
         collisionPaint.setColor(Color.RED);
         collisionPaint.setStyle(Paint.Style.STROKE);
@@ -159,6 +160,9 @@ public class MainGame {
 
         //play Music
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mediaPlayer.setPlaybackParams(mediaPlayer.getPlaybackParams().setSpeed(playSpeed));
+        }
         mediaPlayer.start();
     }
 

@@ -53,7 +53,7 @@ public class ArrowModeGenerator extends ObjectGenerator{
         touchedCircles.put(id, circleInfo);
         ArrowModeCircle circle = circleInfo.buildToArrowMode();
         MainGame.getInstance().add(MainGame.Layer.circle, circle);
-        if(x < Metrics.width){
+        if(x < Metrics.width / 2){
             leftCircle = circle;
             leftCircle.setModeArrows(leftArrows);
         }else{

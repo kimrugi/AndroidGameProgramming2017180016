@@ -6,7 +6,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender"
+        applicationId 'kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.chartmaking'
         minSdk 21
         targetSdk 32
         versionCode 1
