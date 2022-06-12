@@ -109,7 +109,7 @@ public class MainGame {
         if(mediaPlayer == null) {
             setMediaPlayer();
         }
-        mediaPlayer.start();
+        totalTime = -3.0f;
     }
 
     private void initLayers(int count) {
@@ -120,11 +120,15 @@ public class MainGame {
     }
 
     public void update(long elapsedNanos) {
-        //frameTime = elapsedNanos * 1e-9f; // 1_000_000_000.0f;
-        //frameTime = 0.1f; // 1_000_000_000.0f;
-        //totalTime += frameTime;
-        totalTime = mediaPlayer.getCurrentPosition() / 1000.f;
-
+        if(mediaPlayer.isPlaying()) {
+            totalTime = mediaPlayer.getCurrentPosition() / 1000.f;
+        }else{
+            float frameTime = elapsedNanos * 1e-9f; // 1_000_000_000.0f;
+            totalTime += frameTime;
+            if(totalTime > 0.0f){
+                startMusic();
+            }
+        }
         for(ArrayList<GameObject> objects : layers) {
             for (GameObject gobj : objects) {
                 gobj.update();
