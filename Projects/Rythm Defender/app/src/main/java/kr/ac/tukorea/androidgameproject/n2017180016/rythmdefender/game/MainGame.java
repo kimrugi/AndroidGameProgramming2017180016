@@ -113,6 +113,7 @@ public class MainGame {
             public void doFrame(long l) {
                 if(mediaPlayer.isPlaying()){
                     Choreographer.getInstance().postFrameCallbackDelayed(this, 1000);
+                    return;
                 }
                 GameActivity.getInstance().finish();
             }
