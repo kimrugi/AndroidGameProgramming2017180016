@@ -117,7 +117,7 @@ public class MainGame {
                 }
                 GameActivity.getInstance().finish();
             }
-        }, 1000);
+        }, 5000);
     }
 
     public enum Layer{
