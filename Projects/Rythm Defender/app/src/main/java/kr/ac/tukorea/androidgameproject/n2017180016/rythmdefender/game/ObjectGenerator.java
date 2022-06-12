@@ -31,6 +31,7 @@ public class ObjectGenerator implements GameObject {
             Circle circle = circleInfos.remove(0).build();
             MainGame.getInstance().add(MainGame.Layer.circle, circle);
             if(circleInfos.isEmpty()){
+                MainGame.getInstance().endGame();
                 nextCircleTime = 100000000.f;
                 return;
             }

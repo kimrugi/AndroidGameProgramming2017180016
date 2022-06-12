@@ -11,12 +11,14 @@ import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.R;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game.MainGame;
 
 public class GameActivity extends AppCompatActivity {
+    private static GameActivity activity;
     public static final String MUSIC = "MUSIC_FILE_NAME";
     public static final String CHART = "CHART_FILE_NAME";
     public static final String IMAGE = "IMAGE_FILE_NAME";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -45,4 +47,6 @@ public class GameActivity extends AppCompatActivity {
     public void onBackPressed() {
         MainGame.getInstance().onBackPressed();
     }
+
+    public static GameActivity getInstance() {return activity;}
 }

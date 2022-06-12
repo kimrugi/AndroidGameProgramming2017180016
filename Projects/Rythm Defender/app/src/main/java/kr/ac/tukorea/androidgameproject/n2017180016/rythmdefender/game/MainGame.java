@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.R;
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.app.GameActivity;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Background;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameObject;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
@@ -104,6 +105,15 @@ public class MainGame {
                 }
             }, 3000);
         }
+    }
+
+    public void endGame() {
+        Choreographer.getInstance().postFrameCallbackDelayed(new Choreographer.FrameCallback() {
+            @Override
+            public void doFrame(long l) {
+                GameActivity.getInstance().finish();
+            }
+        }, 6000);
     }
 
     public enum Layer{

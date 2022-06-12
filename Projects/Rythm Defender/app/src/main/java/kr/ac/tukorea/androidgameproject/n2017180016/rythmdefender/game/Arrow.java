@@ -51,7 +51,7 @@ public class Arrow extends Sprite implements GameObject {
                 game.score.add(10);
                 Sound.playEffect(R.raw.drum);
                 return;
-            }else if(game.totalTime >= endTime + Metrics.floatValue(R.dimen.barrier_time) ){
+            }else if(collisionCheckWithCircle() ){
                 game.remove(this);
                 isActivated = false;
                 return;
@@ -61,6 +61,16 @@ public class Arrow extends Sprite implements GameObject {
         factor *= factor * factor;
         x = Util.lerp(headx, originx, factor);
         y = Util.lerp(heady, originy, factor);
+    }
+
+    private boolean collisionCheckWithCircle() {
+        float radius = Circle.radius * 0.7f;
+        if(Util.squaredDistance(circle.getX(),
+                circle.getY(),
+                x, y) <= Math.pow(radius, 2)){
+            return true;
+        };
+        return false;
     }
 
     private boolean collisionCheckWithBarrier() {
