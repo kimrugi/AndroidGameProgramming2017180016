@@ -28,6 +28,7 @@ public class MainGame {
     private MediaPlayer mediaPlayer;
 
     private String chartFileName;
+    private String musicFileName;
 
     public static MainGame getInstance() {
         if (singleton == null) {
@@ -55,10 +56,18 @@ public class MainGame {
     }
 
     public void setMusic(String fileName) {
+        musicFileName = fileName;
+    }
+
+    public void setMediaPlayer() {
         AssetManager assets = GameView.view.getContext().getAssets();
         mediaPlayer = new MediaPlayer();
         try {
-            AssetFileDescriptor afd = assets.openFd(fileName);
+            if(musicFileName == null){
+                Log.e(TAG, "Music is not set. Instead, Play default Music");
+                musicFileName = "lune_8bit.mp3";
+            }
+            AssetFileDescriptor afd = assets.openFd(musicFileName);
             mediaPlayer.setDataSource(afd);
             mediaPlayer.prepare();
         } catch (Exception e) {
@@ -98,8 +107,7 @@ public class MainGame {
 
         //play Music
         if(mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(GameView.view.getContext(), R.raw.lune_8bit);
-            Log.e(TAG, "Music is not set. Instead, Play default Music");
+            setMediaPlayer();
         }
         mediaPlayer.start();
     }
