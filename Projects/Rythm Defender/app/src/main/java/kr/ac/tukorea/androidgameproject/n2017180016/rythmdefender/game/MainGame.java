@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.R;
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Background;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameObject;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Recyclable;
@@ -29,6 +30,7 @@ public class MainGame {
 
     private String chartFileName;
     private String musicFileName;
+    private String backGroundFileName;
 
     public static MainGame getInstance() {
         if (singleton == null) {
@@ -79,6 +81,8 @@ public class MainGame {
         this.chartFileName = chartFileName;
     }
 
+    public void setBackGround(String fileName) { this.backGroundFileName = fileName; }
+
     public enum Layer{
         background, circle, arrow, barrier, ui, controller, COUNT
     }
@@ -105,6 +109,8 @@ public class MainGame {
         score.set(0);
         add(Layer.ui, score);
 
+        Background background = new Background(backGroundFileName);
+        add(Layer.background, background);
         //play Music
         if(mediaPlayer == null) {
             setMediaPlayer();

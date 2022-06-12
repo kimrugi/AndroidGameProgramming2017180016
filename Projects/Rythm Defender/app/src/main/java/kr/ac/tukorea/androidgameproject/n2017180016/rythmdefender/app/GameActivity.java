@@ -36,6 +36,7 @@ public class GameActivity extends AppCompatActivity {
         String imageFile = extras.getString(GameActivity.IMAGE);
         MainGame.getInstance().setMusic(musicFile);
         MainGame.getInstance().setChart(chartFile);
+        MainGame.getInstance().setBackGround(imageFile);
 
         setContentView(R.layout.activity_game);
     }
