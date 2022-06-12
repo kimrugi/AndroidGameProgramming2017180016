@@ -1,11 +1,15 @@
 package kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.game;
 
 import android.graphics.Canvas;
+import android.media.ResourceBusyException;
 import android.util.Log;
 
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.R;
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.app.GameActivity;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameObject;
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.GameView;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Metrics;
+import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Sound;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Sprite;
 import kr.ac.tukorea.androidgameproject.n2017180016.rythmdefender.framework.Util;
 
@@ -45,12 +49,11 @@ public class Arrow extends Sprite implements GameObject {
                 game.remove(this);
                 isActivated = false;
                 game.score.add(10);
-                Log.d("TAG", "Barrier");
+                Sound.playEffect(R.raw.drum);
                 return;
             }else if(game.totalTime >= endTime + Metrics.floatValue(R.dimen.barrier_time) ){
                 game.remove(this);
                 isActivated = false;
-                Log.d("TAG", "Circle");
                 return;
             }
         }
