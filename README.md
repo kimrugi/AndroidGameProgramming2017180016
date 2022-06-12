@@ -102,7 +102,8 @@ Rythm Defender
 |8주차(5.23 ~ 5.29)| 추가 채보 제작 |
 |9주차(5.30 ~ )| 최종 발표 준비 |
 
-![게임3](Images/commit.png)
+* commit
+![commit](Images/commit.png)
 
 ## 진행 상황
 * 메인 게임 뷰: 90% 완료
