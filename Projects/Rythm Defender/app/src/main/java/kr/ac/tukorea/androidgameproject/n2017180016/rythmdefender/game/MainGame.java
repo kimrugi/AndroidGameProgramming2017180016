@@ -111,9 +111,12 @@ public class MainGame {
         Choreographer.getInstance().postFrameCallbackDelayed(new Choreographer.FrameCallback() {
             @Override
             public void doFrame(long l) {
+                if(mediaPlayer.isPlaying()){
+                    Choreographer.getInstance().postFrameCallbackDelayed(this, 1000);
+                }
                 GameActivity.getInstance().finish();
             }
-        }, 6000);
+        }, 1000);
     }
 
     public enum Layer{
